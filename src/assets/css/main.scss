@@ -1,0 +1,610 @@
+@import 'globals';
+
+body {
+    margin: 0;
+    font-family: 'serenity', sans-serif;
+}
+
+.hidden {
+    display: none !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+
+/* svg - início
+/* *********************************** */
+
+.svg {
+    display: block;
+    position: relative;
+}
+
+.svg svg {
+    display: block;
+    position: relative;
+}
+
+.svg--width svg {
+    width: 100%;
+}
+
+.svg--height svg {
+    height: 100%;
+}
+
+/* svg - fim
+/* *********************************** */
+
+
+/* app - início
+/* *********************************** */
+
+.app {
+    display: flex;
+    flex-flow: column nowrap;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.app__main {
+    width: 100%;
+    height: 100vh;
+}
+
+/* app - fim
+/* *********************************** */
+
+
+/* editor-navbar - início
+/* *********************************** */
+
+.editor-navbar {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 75px;
+    border-bottom: 1px solid $colorBlack;
+}
+
+.editor-navbar__left,
+.editor-navbar__right {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    height: 100%;
+}
+
+.editor-navbar__left {
+    justify-content: flex-start;
+    margin-left: 30px;
+}
+
+.editor-navbar__right {
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+.editor-navbar__brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: $colorBlack;
+}
+
+.editor-navbar__brand svg {
+    width: 16px;
+    stroke: $colorWhite;
+}
+
+.editor-navbar__logo {
+    display: none;
+    margin-left: 30px;
+}
+
+.editor-navbar__logo svg {
+    height: 35px;
+}
+
+.editor-navbar__site {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-left: 30px;
+}
+
+.editor-navbar__label {
+    margin: 0;
+    color: $colorDavysGrey;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.editor-navbar__value {
+    margin: 0;
+    color: $colorJet;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+/* editor-navbar - fim
+/* *********************************** */
+
+
+/* editor-sidebar - fim
+/* *********************************** */
+
+.editor-sidebar {
+    width: 100%;
+    height: 100%;
+}
+
+.editor-sidebar--left {
+    border-right: 1px solid $colorBlack;
+}
+
+.editor-sidebar--right {
+    border-left: 1px solid $colorBlack;
+}
+
+/* editor-sidebar - fim
+/* *********************************** */
+
+
+/* editor-sidebar-group - início
+/* *********************************** */
+
+.editor-sidebar-group {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.editor-sidebar-group__title {
+    margin: 0;
+    padding-top: 20px;
+    padding-left: 20px;
+    color: $colorDavysGrey;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.editor-sidebar-group__content {
+    margin: 0 20px;
+    margin-top: 10px;
+}
+
+/* editor-sidebar-group - fim
+/* *********************************** */
+
+
+/* editor-sidebar-blocks - início
+/* *********************************** */
+
+.editor-sidebar-blocks {
+    display: grid;
+    grid-template-columns: 110px 110px;
+    column-gap: 20px;
+    row-gap: 20px;
+    width: 100%;
+}
+
+/* editor-sidebar-blocks - fim
+/* *********************************** */
+
+
+/* editor-sidebar-block - início
+/* *********************************** */
+
+.editor-sidebar-block::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: calc(100% + 6px);
+    height: calc(100% + 6px);
+    border-radius: 6px;
+    border: 2px solid $colorBlack;
+    opacity: 0;
+}
+
+.editor-sidebar-block {
+    cursor: pointer;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 4px;
+
+    border: 1px solid $colorBlack;
+    
+    font-size: 18px;
+    text-align: center;
+}
+
+.editor-sidebar-block:hover,
+.editor-sidebar-block:hover {
+    border-color: transparent;
+}
+
+.editor-sidebar-block:hover::before,
+.editor-sidebar-block:hover::before {
+    opacity: 1;
+}
+
+.editor-sidebar-block__icon {
+    height: 25px;
+    margin-bottom: 10px;
+}
+
+.editor-sidebar-block__icon svg {
+    height: 100%;
+}
+
+/* editor-sidebar-block - fim
+/* *********************************** */
+
+
+/* editor-content - início
+/* *********************************** */
+
+.editor-content {
+    padding: 30px 0;
+    padding-left: 30px;
+    width: calc(100% - 30px);
+    height: calc(100% - 60px);
+    overflow-y: scroll;
+}
+
+/* editor-content - fim
+/* *********************************** */
+
+
+/* editor-content-block - início
+/* *********************************** */
+
+.editor-content-block {
+    position: relative;
+    width: calc(100% - 80px);
+    min-height: 250px;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    margin: 0 auto;
+    border: 1px solid $colorBlack;
+}
+
+.editor-content-block:not(:last-child) {
+    margin-bottom: 30px;
+}
+
+.editor-content-block__header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 5px;
+    color: $colorJet;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.editor-content-block__header svg {
+    height: 15px;
+    fill: $colorJet;
+}
+
+.editor-content-block__controller {
+    display: flex;
+    flex-flow: column nowrap;
+    position: absolute;
+    top: -1px;
+    left: -32px;
+    width: 30px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border: 1px solid $colorBlack;
+}
+
+.editor-content-block__controller button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    transition: all 160ms ease;
+}
+
+.editor-content-block__controller svg {
+    height: 18px;
+    stroke: $colorBlack;
+}
+
+.editor-content-block__controller button:focus,
+.editor-content-block__controller button:hover {
+    background-color: $colorBlack;
+}
+
+.editor-content-block__controller button:focus svg,
+.editor-content-block__controller button:hover svg {
+    stroke: $colorWhite;
+}
+
+.editor-content-block__remove {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid $colorBlack;
+    background-color: transparent;
+    transition: all 160ms ease;
+}
+
+.editor-content-block__remove svg {
+    height: 18px;
+    stroke: $colorBlack;
+}
+
+.editor-content-block__remove:focus,
+.editor-content-block__remove:hover {
+    background-color: $colorBlack;
+}
+
+.editor-content-block__remove:focus svg,
+.editor-content-block__remove:hover svg {
+    stroke: $colorWhite;
+}
+
+/* editor-content-block - fim
+/* *********************************** */
+
+
+/* editor - início
+/* *********************************** */
+
+.editor {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100vh;
+}
+
+.editor__header {
+    width: 100%;
+    height: 75px;
+}
+
+.editor__body {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
+    height: calc(100% - 75px);
+}
+
+.editor__left {
+    width: 282px;
+}
+
+.editor__center {
+    width: calc(100% - 282px - 250px);
+}
+
+.editor__right {
+    width: 250px;
+}
+
+/* editor - fim
+/* *********************************** */
+
+
+/* page - fim
+/* *********************************** */
+
+.page {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.page__header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 60px;
+    z-index: $layer2;
+}
+
+.page__logo {
+  height: 18px;
+}
+
+.page__logo svg {
+    fill: $colorWhite;
+}
+
+.page__body {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 60px);
+}
+
+/* page - fim
+/* *********************************** */
+
+
+/* react-modal - início
+/* ******************************************** */
+
+.react-modal-overlay {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: $layer5;
+}
+
+.react-modal {
+    display: block;
+
+    border-radius: 8px;
+    margin: 0 auto;
+
+    outline: none;
+    -webkit-overflow-scrolling: touch;
+
+    border: 1px solid $colorJet;
+    background: $colorEerieBlack;
+}
+
+/* react-modal - fim
+/* ******************************************** */
+
+
+/* modal - início
+/* ******************************************** */
+
+.modal {
+    min-width: 200px;
+}
+
+.modal__header {
+    display: flex;
+    flex-flow: row nowrap;
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.modal__header-left,
+.modal__header-right {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.modal__header-left {
+    justify-content: flex-start;
+}
+
+.modal__header-right {
+    justify-content: flex-end;
+}
+
+.modal__titles {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.modal__hat {
+    margin: 0;
+    margin-bottom: 2px;
+    color: $colorLightGray;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.modal__title {
+    margin: 0;
+    color: $colorWhite;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.modal__close {
+    cursor: pointer;
+    padding: 6px;
+    border: none;
+    background-color: transparent;
+}
+
+.modal__close svg {
+    padding: 0;
+    height: 15px;
+}
+
+.modal__content {
+    position: relative;
+}
+
+.modal__actions {
+    display: flex;
+    flex-flow: row nowrap;
+    margin-top: 20px;
+}
+
+.modal__actions .btn:not(:last-child) {
+    margin-right: 5px;
+}
+
+.modal__link {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    padding: 0 10px;
+    width: calc(100% - 20px);
+    height: 55px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    color: #000;
+}
+
+.modal__link:hover {
+    text-decoration: none;
+    background-color: rgb(229, 229, 234);
+}
+
+/* modal - fim
+/* ******************************************** */
+
+
+
+
+
+
+
+
+
+
+
+

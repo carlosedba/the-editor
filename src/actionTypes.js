@@ -1,0 +1,10 @@
+export const OPEN_CONTEXT_MENU = 'OPEN_CONTEXT_MENU'
+export const CLOSE_CONTEXT_MENU = 'CLOSE_CONTEXT_MENU'
+
+export const ADD_MODAL = 'ADD_MODAL'
+export const OPEN_MODAL = 'OPEN_MODAL'
+export const CLOSE_MODAL = 'CLOSE_MODAL'
+export const UPDATE_MODAL = 'UPDATE_MODAL'
+export const RESET_MODAL = 'RESET_MODAL'
+export const REMOVE_MODAL = 'REMOVE_MODAL'
+

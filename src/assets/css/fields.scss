@@ -1,0 +1,147 @@
+@import 'globals';
+
+/* fields - início
+/* ******************************************** */
+
+.fields {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+}
+
+.fields .field:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.fields__row {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.fields__row--full {
+  width: 100%;
+}
+
+.fields__row .field--half {
+  flex-shrink: 0;
+  width: calc(50% - 10px);
+}
+
+.fields__row .field:not(:last-child) {
+  margin-right: 10px;
+}
+
+/* fields - fim
+/* ******************************************** */
+
+
+/* field - início
+/* ******************************************** */
+
+.field {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+}
+
+.field--full {
+  width: 100%;
+}
+
+.field--w1 {
+  width: 100px;
+}
+
+.field--w1-q1 {
+  width: 125px;
+}
+
+.field--w1-q2 {
+  width: 150px;
+}
+
+.field--w1-q3 {
+  width: 175px;
+}
+
+.field--w2 {
+  width: 200px;
+}
+
+.field--w2-q1 {
+  width: 225px;
+}
+
+.field--w2-q2 {
+  width: 250px;
+}
+
+.field--w2-q3 {
+  width: 275px;
+}
+
+.field--w3 {
+  width: 300px;
+}
+
+.field--w3-q1 {
+  width: 325px;
+}
+
+.field--w3-q2 {
+  width: 350px;
+}
+
+.field--w3-q3 {
+  width: 375px;
+}
+
+.field--w4 {
+  width: 400px;
+}
+
+.field--w4-q1 {
+  width: 425px;
+}
+
+.field--w4-q2 {
+  width: 450px;
+}
+
+.field--w4-q3 {
+  width: 475px;
+}
+
+.field--w5 {
+  width: 500px;
+}
+
+.field--w5-q1 {
+  width: 525px;
+}
+
+.field--w5-q2 {
+  width: 550px;
+}
+
+.field--w5-q3 {
+  width: 575px;
+}
+
+.field__label {
+  margin: 0;
+  color: $colorSilverGray;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.field__value {
+  margin: 0;
+  color: $colorWhite;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* field - fim
+/* ******************************************** */
+

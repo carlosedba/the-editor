@@ -1,0 +1,83 @@
+@import 'globals';
+
+/* btn - início
+/* *********************************** */
+
+.btn {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 4px 6px;
+  margin: 0;
+
+  cursor: pointer;
+
+  border: none;
+
+  font-family: 'serenity', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  transition: all 160ms ease;
+}
+
+.btn__icon {
+  margin-right: 5px;
+}
+
+.btn__icon svg {
+  display: block;
+  height: 100%;
+}
+
+/* btn - fim
+/* *********************************** */
+
+
+/* btn--one - início
+/* *********************************** */
+
+.btn--one::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
+  border-radius: 6px;
+  border: 2px solid $colorBlack;
+  opacity: 0;
+}
+
+.btn--one {
+  padding: 8px 12px 8px 8px;
+  border-radius: 4px;
+
+  border: 1px solid transparent;
+  background-color: $colorBlack;
+
+  color: $colorWhite;
+  font-size: 18px;
+  text-transform: none;
+}
+
+.btn--one .btn__icon {
+  height: 15px;
+}
+
+.btn--one:hover,
+.btn--one:focus {}
+
+.btn--one:hover::before,
+.btn--one:hover::before {
+    opacity: 1;
+}
+
+/* btn--one - fim
+/* *********************************** */
+
