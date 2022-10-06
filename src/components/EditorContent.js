@@ -31,26 +31,34 @@ export default function EditorContent(props) {
           itemType: monitor.getItemType(),
           didDrop: monitor.didDrop(),
         }
+      },
+
+      drop(item, monitor) {
+        const itemType = monitor.getItemType()
+        const ContentBlock = contentBlocks[itemType]
+
+        setBlocks([
+          ...blocks,
+          { order: null, Block: ContentBlock }
+        ])
       }
     }), []
   )
 
   useEffect(() => {
-    if (didDrop && itemType) {
-      const ContentBlock = contentBlocks[itemType]
-
-      setBlocks([
-        ...blocks,
-        { order: null, Block: ContentBlock }
-      ])
+    if (didDrop) {
     }
   }, [didDrop])
+
+  useEffect(() => {
+    Log.dev('EditorContent', blocks)
+  }, [blocks])
 
   function renderBlocks() {
     return blocks.map((block, i) => {
       const { Block } = block
 
-      return (<Block/>)
+      return (<Block key={i}/>)
     })
   }
 

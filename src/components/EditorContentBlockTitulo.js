@@ -7,9 +7,15 @@ import Log from '@/utils/Log'
 export default function EditorContentBlockTitulo(props) {
   useFeather()
 
+  const [value, setValue] = useState('')
+
+  function handleChange(event) {
+    Log.dev(event.currentTarget)
+  }
+
   return (
-    <div className="editor-content-block editor-content-block-titulo" ref={drop}>
-      <input/>
+    <div className="editor-content-block editor-content-block-titulo">
+      <input value={value} onChange={handleChange}/>
     </div>
   )
 }

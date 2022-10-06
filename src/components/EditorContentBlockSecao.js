@@ -5,6 +5,8 @@ import useFeather from '@/hooks/useFeather'
 
 import Log from '@/utils/Log'
 
+import contentBlocks from '@/contentBlocks'
+
 import {
   DND_EDITOR_SIDEBAR_BLOCK_SECAO,
   DND_EDITOR_SIDEBAR_BLOCK_TITULO,
@@ -18,12 +20,12 @@ import {
 
 export default function EditorContentBlockSecao(props) {
   useFeather()
+
+  const [blocks, setBlocks] = useState([])
   
   const [{ item, itemType, didDrop }, drop] = useDrop(
     () => ({
-      accept: [
-        DND_EDITOR_SIDEBAR_BLOCK_TITULO
-      ],
+      accept: DND_EDITOR_SIDEBAR_BLOCK_TITULO,
 
       collect(monitor) {
         return {
@@ -31,15 +33,37 @@ export default function EditorContentBlockSecao(props) {
           itemType: monitor.getItemType(),
           didDrop: monitor.didDrop(),
         }
+      },
+
+      drop(item, monitor) {
+        const itemType = monitor.getItemType()
+        const ContentBlock = contentBlocks[itemType]
+
+        setBlocks([
+          ...blocks,
+          { order: null, Block: ContentBlock }
+        ])
       }
     }), []
   )
 
   useEffect(() => {
-    if (didDrop && itemType) {
-      Log.dev(itemType)
+    if (didDrop) {
+      Log.dev('secao', didDrop, itemType)
     }
   }, [didDrop])
+
+  useEffect(() => {
+    Log.dev('EditorContentBlockSecao', blocks)
+  }, [blocks])
+
+  function renderBlocks() {
+    return blocks.map((block, i) => {
+      const { Block } = block
+
+      return (<Block key={i}/>)
+    })
+  }
 
   return (
     <div className="editor-content-block editor-content-block-secao" ref={drop}>
@@ -56,6 +80,8 @@ export default function EditorContentBlockSecao(props) {
       <button className="editor-content-block__remove">
         <i data-feather="x"></i>
       </button>
+
+      {renderBlocks()}
     </div>
   )
 }
