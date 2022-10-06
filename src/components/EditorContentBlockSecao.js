@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDrop } from 'react-dnd'
 
+import useFeather from '@/hooks/useFeather'
+
 import Log from '@/utils/Log'
 
 import {
@@ -14,8 +16,9 @@ import {
   DND_EDITOR_SIDEBAR_BLOCK_BOX_DESCONTOS
 } from '@/dndTypes'
 
-
 export default function EditorContentBlockSecao(props) {
+  useFeather()
+  
   const [{ item, itemType, didDrop }, drop] = useDrop(
     () => ({
       accept: [

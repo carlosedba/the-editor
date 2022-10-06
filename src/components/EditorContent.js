@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDrop } from 'react-dnd'
 
+import EditorContentBlockSecao from '@/components/EditorContentBlockSecao'
+
 import Log from '@/utils/Log'
+
+import contentBlocks from '@/contentBlocks'
 
 import {
   DND_EDITOR_SIDEBAR_BLOCK_SECAO,
@@ -14,9 +18,9 @@ import {
   DND_EDITOR_SIDEBAR_BLOCK_BOX_DESCONTOS
 } from '@/dndTypes'
 
-import EditorContentBlockSecao from '@/components/EditorContentBlockSecao'
-
 export default function EditorContent(props) {
+  const [blocks, setBlocks] = useState([])
+
   const [{ item, itemType, didDrop }, drop] = useDrop(
     () => ({
       accept: DND_EDITOR_SIDEBAR_BLOCK_SECAO,
@@ -33,15 +37,26 @@ export default function EditorContent(props) {
 
   useEffect(() => {
     if (didDrop && itemType) {
-      Log.dev(itemType)
+      const ContentBlock = contentBlocks[itemType]
+
+      setBlocks([
+        ...blocks,
+        { order: null, Block: ContentBlock }
+      ])
     }
   }, [didDrop])
 
+  function renderBlocks() {
+    return blocks.map((block, i) => {
+      const { Block } = block
+
+      return (<Block/>)
+    })
+  }
+
   return (
     <div className="editor-content" ref={drop}>
-      <EditorContentBlockSecao/>
-      <EditorContentBlockSecao/>
-      <EditorContentBlockSecao/>
+      {renderBlocks()}
     </div>
   )
 }
