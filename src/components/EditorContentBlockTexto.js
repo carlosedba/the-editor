@@ -4,7 +4,7 @@ import useFeather from '@/hooks/useFeather'
 
 import Log from '@/utils/Log'
 
-export default function EditorContentBlockTitulo(props) {
+export default function EditorContentBlockTexto(props) {
   useFeather()
 
   const [value, setValue] = useState('')
@@ -15,8 +15,8 @@ export default function EditorContentBlockTitulo(props) {
   }
 
   return (
-    <div className="editor-content-block editor-content-block-titulo">
-      <input placeholder="Título" value={value} onChange={handleChange}/>
+    <div className="editor-content-block editor-content-block-texto">
+      <textarea placeholder="Texto..." value={value} onChange={handleChange}/>
     </div>
   )
 }

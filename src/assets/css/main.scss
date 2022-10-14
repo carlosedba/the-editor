@@ -76,7 +76,7 @@ input[type=number] {
     align-items: center;
     position: relative;
     width: 100%;
-    height: 75px;
+    height: 100%;
     border-bottom: 1px solid $colorBlack;
 }
 
@@ -153,6 +153,7 @@ input[type=number] {
 .editor-sidebar {
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .editor-sidebar--left {
@@ -173,6 +174,7 @@ input[type=number] {
 .editor-sidebar-group {
     display: flex;
     flex-flow: column nowrap;
+    width: 100%;
 }
 
 .editor-sidebar-group__title {
@@ -199,9 +201,9 @@ input[type=number] {
 
 .editor-sidebar-blocks {
     display: grid;
-    grid-template-columns: 110px 110px;
-    column-gap: 20px;
-    row-gap: 20px;
+    grid-template-columns: 112px 112px;
+    column-gap: 15px;
+    row-gap: 15px;
     width: 100%;
 }
 
@@ -281,39 +283,36 @@ input[type=number] {
 /* *********************************** */
 
 
-/* editor-content-block - início
-/* *********************************** */
+/* editor-content-block-header - início
+/* **************************************** */
 
-.editor-content-block {
-    position: relative;
-    width: calc(100% - 80px);
-    min-height: 250px;
-    border-radius: 4px;
-    border-top-left-radius: 0;
-    margin: 0 auto;
-    border: 1px solid $colorBlack;
-}
-
-.editor-content-block:not(:last-child) {
-    margin-bottom: 30px;
-}
-
-.editor-content-block__header {
+.editor-content-block-header {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    padding: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 5px;
+    height: 30px;
     color: $colorJet;
     font-size: 14px;
     text-transform: uppercase;
 }
 
-.editor-content-block__header svg {
+.editor-content-block-header svg {
     height: 15px;
     fill: $colorJet;
 }
 
-.editor-content-block__controller {
+/* editor-content-block-header - fim
+/* **************************************** */
+
+
+/* editor-content-block-controller - início
+/* **************************************** */
+
+.editor-content-block-controller {
     display: flex;
     flex-flow: column nowrap;
     position: absolute;
@@ -325,7 +324,7 @@ input[type=number] {
     border: 1px solid $colorBlack;
 }
 
-.editor-content-block__controller button {
+.editor-content-block-controller button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -337,22 +336,29 @@ input[type=number] {
     transition: all 160ms ease;
 }
 
-.editor-content-block__controller svg {
+.editor-content-block-controller svg {
     height: 18px;
     stroke: $colorBlack;
 }
 
-.editor-content-block__controller button:focus,
-.editor-content-block__controller button:hover {
+.editor-content-block-controller button:focus,
+.editor-content-block-controller button:hover {
     background-color: $colorBlack;
 }
 
-.editor-content-block__controller button:focus svg,
-.editor-content-block__controller button:hover svg {
+.editor-content-block-controller button:focus svg,
+.editor-content-block-controller button:hover svg {
     stroke: $colorWhite;
 }
 
-.editor-content-block__remove {
+/* editor-content-block-controller - fim
+/* **************************************** */
+
+
+/* editor-content-block-remove - início
+/* **************************************** */
+
+.editor-content-block-remove {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -362,26 +368,35 @@ input[type=number] {
     cursor: pointer;
     width: 30px;
     height: 30px;
-    border-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
     border: 1px solid $colorBlack;
     background-color: transparent;
     transition: all 160ms ease;
 }
 
-.editor-content-block__remove svg {
+.editor-content-block-remove svg {
     height: 18px;
     stroke: $colorBlack;
 }
 
-.editor-content-block__remove:focus,
-.editor-content-block__remove:hover {
+.editor-content-block-remove:focus,
+.editor-content-block-remove:hover {
     background-color: $colorBlack;
 }
 
-.editor-content-block__remove:focus svg,
-.editor-content-block__remove:hover svg {
+.editor-content-block-remove:focus svg,
+.editor-content-block-remove:hover svg {
     stroke: $colorWhite;
 }
+
+/* editor-content-block-remove - fim
+/* **************************************** */
+
+
+/* editor-content-block - início
+/* *********************************** */
+
 
 /* editor-content-block - fim
 /* *********************************** */
@@ -406,19 +421,22 @@ input[type=number] {
     flex-flow: row nowrap;
     justify-content: space-between;
     width: 100%;
-    height: calc(100% - 75px);
+    height: calc(100% - 76px);
 }
 
 .editor__left {
-    width: 282px;
+    flex-shrink: 0;
+    width: 280px;
 }
 
 .editor__center {
-    width: calc(100% - 282px - 250px);
+    width: calc(100% - 280px - 250px);
 }
 
 .editor__right {
+    flex-shrink: 0;
     width: 250px;
+    overflow: hidden;
 }
 
 /* editor - fim

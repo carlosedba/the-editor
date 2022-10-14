@@ -25,7 +25,11 @@ export default function EditorContentBlockSecao(props) {
   
   const [{ item, itemType, didDrop }, drop] = useDrop(
     () => ({
-      accept: DND_EDITOR_SIDEBAR_BLOCK_TITULO,
+      accept: [
+        DND_EDITOR_SIDEBAR_BLOCK_TITULO,
+        DND_EDITOR_SIDEBAR_BLOCK_TEXTO,
+        DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES,
+      ],
 
       collect(monitor) {
         return {
@@ -39,10 +43,10 @@ export default function EditorContentBlockSecao(props) {
         const itemType = monitor.getItemType()
         const ContentBlock = contentBlocks[itemType]
 
-        setBlocks([
+        setBlocks((blocks) => ([
           ...blocks,
           { order: null, Block: ContentBlock }
-        ])
+        ]))
       }
     }), []
   )
@@ -67,17 +71,17 @@ export default function EditorContentBlockSecao(props) {
 
   return (
     <div className="editor-content-block editor-content-block-secao" ref={drop}>
-      <header className="editor-content-block__header">
+      <header className="editor-content-block-header">
         <i data-feather="align-justify"></i>
         Seção
       </header>
 
-      <div className="editor-content-block__controller">
+      <div className="editor-content-block-controller">
         <button><i data-feather="chevron-up"></i></button>
         <button><i data-feather="chevron-down"></i></button>
       </div>
 
-      <button className="editor-content-block__remove">
+      <button className="editor-content-block-remove">
         <i data-feather="x"></i>
       </button>
 

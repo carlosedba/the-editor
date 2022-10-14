@@ -1,0 +1,24 @@
+@import 'globals';
+
+.editor-content-block-texto {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: calc(100% - 40px);
+}
+
+.editor-content-block-texto ::placeholder {
+  font-weight: 300;
+}
+
+.editor-content-block-texto textarea {
+  width: 100%;
+  min-height: 100px;
+  border: none;
+  border-bottom: 1px solid $colorBlack;
+
+  outline: none;
+
+  font-family: 'serenity', sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+}

@@ -37,10 +37,10 @@ export default function EditorContent(props) {
         const itemType = monitor.getItemType()
         const ContentBlock = contentBlocks[itemType]
 
-        setBlocks([
+        setBlocks((blocks) => ([
           ...blocks,
           { order: null, Block: ContentBlock }
-        ])
+        ]))
       }
     }), []
   )
