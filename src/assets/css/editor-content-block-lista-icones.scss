@@ -51,7 +51,7 @@
   border: 1px solid $colorBlack;
 }
 
-.editor-content-block-lista-icones-item__icon input {
+.editor-content-block-lista-icones-item__icon-input {
   position: absolute;
   top: 0;
   left: 0;
@@ -59,6 +59,19 @@
   height: 100%;
   opacity: 0;
   cursor: pointer;
+}
+
+.editor-content-block-lista-icones-item__icon-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.editor-content-block-lista-icones-item__icon-preview img {
+  display: block;
+  height: 60px;
 }
 
 .editor-content-block-lista-icones-item__text-input {

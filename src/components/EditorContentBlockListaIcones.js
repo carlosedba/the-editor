@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import useFeather from '@/hooks/useFeather'
 
@@ -11,6 +11,8 @@ export default function EditorContentBlockListaIcones(props) {
   const [items, setItems] = useState([
     { icon: '', text: '' }
   ])
+
+  const fileInputs = useRef([])
 
   function handleChange(event) {
     const target = event.currentTarget
@@ -41,13 +43,42 @@ export default function EditorContentBlockListaIcones(props) {
     })
   }
 
+  function handleItemIconChange(event, index) {
+    const input = fileInputs.current[index]
+    const files = input.files
+    const file = files[0]
+
+    const reader = new FileReader()
+    
+    reader.onload = (event) => {
+      let icon = event.target.result
+
+      setItems((items) => {
+        return items.map((item, i) => {
+          if (i === index) {
+            return {
+              ...item,
+              icon: icon
+            }
+          } 
+          
+          return item       
+        })
+      })
+    }
+
+    reader.readAsDataURL(file)
+  }
+
   function renderItems() {
     return items.map((item, i) => {
       return (
-        <div className="editor-content-block-lista-icones-item">
+        <div className="editor-content-block-lista-icones-item" key={i}>
           <div className="editor-content-block-lista-icones-item__icon">
-            <input className="editor-content-block-lista-icones-item__icon-input" type="file" accept="image/svg+xml"/>
-            <div className="editor-content-block-lista-icones-item__icon-preview" dangerouslySetInnerHTML={{ __html: item.icon }}></div>
+            <input className="editor-content-block-lista-icones-item__icon-input" type="file" accept="image/svg+xml" onChange={(event) => handleItemIconChange(event, i)} ref={(el) => fileInputs.current[i] = el}/>
+            <div className="editor-content-block-lista-icones-item__icon-preview">
+              <img src={item.icon}/>
+            </div>
           </div>
           <input className="editor-content-block-lista-icones-item__text-input" placeholder="Texto..." type="text" value={item.text} onChange={(event) => handleItemTextChange(event, i)}/>
         </div>
