@@ -1,6 +1,8 @@
 @import 'globals';
 
 .editor-content-block-secao {
+  display: flex;
+  flex-flow: column nowrap;
   position: relative;
   padding: 40px 0 20px 0;
   width: calc(100% - 80px);

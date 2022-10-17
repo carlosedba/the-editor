@@ -1,0 +1,37 @@
+@import 'globals';
+
+.editor-content-block-tooltip {
+    background-color: $colorWhite;
+}
+
+.editor-content-block-tooltip__header {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.editor-content-block-tooltip__action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.editor-content-block-tooltip__action:not(:last-child) {
+    margin-right: 0;
+}
+
+.editor-content-block-tooltip__action svg {
+    display: block;
+    flex-shrink: 0;
+    height: 15px;
+    transition: all 160ms ease;
+}
+
+.editor-content-block-tooltip__action:focus svg,
+.editor-content-block-tooltip__action:hover svg {
+    transform: scale(1.15);
+}

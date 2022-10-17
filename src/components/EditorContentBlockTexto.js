@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
+import EditorContentBlockTooltip from '@/components/EditorContentBlockTooltip'
+
 import useFeather from '@/hooks/useFeather'
 
 import Log from '@/utils/Log'
 
+import { DND_EDITOR_SIDEBAR_BLOCK_TEXTO } from '@/dndTypes'
+
 export default function EditorContentBlockTexto(props) {
   useFeather()
+
+  const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_TEXTO
 
   const [value, setValue] = useState('')
 
@@ -15,8 +21,10 @@ export default function EditorContentBlockTexto(props) {
   }
 
   return (
-    <div className="editor-content-block editor-content-block-texto">
+    <div className="editor-content-block editor-content-block-texto" data-tip={DND_TYPE} data-for={DND_TYPE}>
       <textarea placeholder="Texto..." value={value} onChange={handleChange}/>
+
+      <EditorContentBlockTooltip id={DND_TYPE}/>
     </div>
   )
 }

@@ -98,6 +98,10 @@ input[type=number] {
     margin-right: 20px;
 }
 
+.editor-navbar__right .btn:not(:last-child) {
+    margin-right: 10px;
+}
+
 .editor-navbar__brand {
     display: flex;
     justify-content: center;

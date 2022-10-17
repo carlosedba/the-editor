@@ -1,0 +1,32 @@
+@import 'globals';
+
+.editor-content-block-placeholder {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  width: calc(100% - 40px - 40px);
+  height: 150px;
+  margin: 0 auto;
+  border-radius: 4px;
+  border: 1px solid $colorBlack;
+}
+
+.editor-content-block-placeholder__icon {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.editor-content-block-placeholder__icon svg {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: 100%;
+}
+
+.editor-content-block-placeholder__name {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 500;
+}

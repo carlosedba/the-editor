@@ -1,0 +1,28 @@
+@import 'globals';
+
+.editor-content-block-tooltip-input {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 225px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+.editor-content-block-tooltip-input__label {
+    margin: 0;
+    margin-bottom: 3px;
+    color: $colorDavysGrey;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.editor-content-block-tooltip-input__input {
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid $colorBlack;
+    background-color: transparent;
+    font-family: 'serenity', sans-serif;
+    font-size: 16px;
+}

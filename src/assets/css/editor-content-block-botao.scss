@@ -1,1 +1,22 @@
 @import 'globals';
+
+.editor-content-block-botao {
+    position: relative;
+    align-self: flex-start;
+    margin-left: 20px;
+}
+
+.editor-content-block-botao__btn {
+    padding: 10px 0;
+    border-radius: 40px;
+    border: 1px solid $colorBlack;
+}
+
+.editor-content-block-botao__btn input {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    font-family: 'serenity', sans-serif;
+    font-size: 19px;
+    text-align: center;
+}

@@ -24,9 +24,21 @@ export default function EditorNavbar(props) {
       <div className="editor-navbar__right">
         <button className="btn btn--one">
           <div className="btn__icon">
+            <i data-feather="upload"></i>
+          </div>
+          Carregar
+        </button>
+        <button className="btn btn--one">
+          <div className="btn__icon">
+            <i data-feather="save"></i>
+          </div>
+          Salvar
+        </button>
+        <button className="btn btn--one">
+          <div className="btn__icon">
             <i data-feather="copy"></i>
           </div>
-          Copiar código
+          Copiar para o WebP
         </button>
       </div>
     </nav>

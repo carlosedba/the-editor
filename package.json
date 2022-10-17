@@ -49,6 +49,7 @@
     "react-modal": "^3.11.2",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.2.0",
+    "react-tooltip": "^4.4.0",
     "redux": "^4.1.2",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^6.1.2",
