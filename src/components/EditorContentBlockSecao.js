@@ -55,10 +55,16 @@ export default function EditorContentBlockSecao(props) {
         const itemType = monitor.getItemType()
         const ContentBlock = contentBlocks[itemType]
 
-        setBlocks((blocks) => ([
-          ...blocks,
-          { id: nanoid(), order: null, Block: ContentBlock, content: null }
-        ]))
+        setBlocks((blocks) => {
+          let newBlocks = [
+            ...blocks,
+            { id: nanoid(), order: null, blockType: itemType, Block: ContentBlock, content: null }
+          ]
+
+          if (onChange) onChange(newBlocks)
+
+          return newBlocks
+        })
       }
     }), []
   )

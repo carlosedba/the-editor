@@ -42,7 +42,7 @@ export default function EditorContent(props) {
 
         setBlocks((blocks) => ([
           ...blocks,
-          { id: nanoid(), order: null, Block: ContentBlock, content: null }
+          { id: nanoid(), order: null, blockType: itemType, Block: ContentBlock, content: null }
         ]))
       }
     }), []
@@ -94,14 +94,16 @@ export default function EditorContent(props) {
     return blocks.map((block, i) => {
       const { Block } = block
 
-      return (<Block
-        key={block.id}
-        initialContent={block.content}
-        onChange={(content) => handleContentBlockChange(i, content)}
-        onDelete={() => handleContentBlockDelete(i)}
-        onMoveUp={() => handleContentBlockMoveUp(i)}
-        onMoveDown={() => handleContentBlockMoveDown(i)}
-      />)
+      return (
+        <Block
+          key={block.id}
+          initialContent={block.content}
+          onChange={(content) => handleContentBlockChange(i, content)}
+          onDelete={() => handleContentBlockDelete(i)}
+          onMoveUp={() => handleContentBlockMoveUp(i)}
+          onMoveDown={() => handleContentBlockMoveDown(i)}
+        />
+      )
     })
   }
 
