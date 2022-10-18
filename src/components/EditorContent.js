@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useDrop } from 'react-dnd'
+import { nanoid } from 'nanoid'
 
 import EditorContentBlockSecao from '@/components/EditorContentBlockSecao'
 
 import Log from '@/utils/Log'
+
+import * as BlockUtil from '@/utils/BlockUtil'
 
 import contentBlocks from '@/contentBlocks'
 
@@ -39,7 +42,7 @@ export default function EditorContent(props) {
 
         setBlocks((blocks) => ([
           ...blocks,
-          { order: null, Block: ContentBlock }
+          { id: nanoid(), order: null, Block: ContentBlock, content: null }
         ]))
       }
     }), []
@@ -54,11 +57,51 @@ export default function EditorContent(props) {
     Log.dev('EditorContent', blocks)
   }, [blocks])
 
+  function updateBlock(index, props) {
+    setBlocks((blocks) => {
+      return blocks.map((block, i) => {
+        if (i !== index) return block
+  
+        return {
+          ...block,
+          ...props
+        }
+      })
+    })
+  }
+
+  function deleteBlock(index) {
+    setBlocks((blocks) => blocks.filter((block, i) => i !== index))
+  }
+
+  function handleContentBlockMoveUp(index) {
+    setBlocks((blocks) => BlockUtil.moveUp(blocks, index))
+  }
+
+  function handleContentBlockMoveDown(index) {
+    setBlocks((blocks) => BlockUtil.moveDown(blocks, index))
+  }
+
+  function handleContentBlockChange(index, blockContent) {
+    updateBlock(index, { content: blockContent })
+  }
+
+  function handleContentBlockDelete(index) {
+    deleteBlock(index)
+  }
+
   function renderBlocks() {
     return blocks.map((block, i) => {
       const { Block } = block
 
-      return (<Block key={i}/>)
+      return (<Block
+        key={block.id}
+        initialContent={block.content}
+        onChange={(content) => handleContentBlockChange(i, content)}
+        onDelete={() => handleContentBlockDelete(i)}
+        onMoveUp={() => handleContentBlockMoveUp(i)}
+        onMoveDown={() => handleContentBlockMoveDown(i)}
+      />)
     })
   }
 

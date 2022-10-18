@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useDrop } from 'react-dnd'
+import { nanoid } from 'nanoid'
 
 import useFeather from '@/hooks/useFeather'
 
 import Log from '@/utils/Log'
+
+import * as BlockUtil from '@/utils/BlockUtil'
 
 import contentBlocks from '@/contentBlocks'
 
@@ -20,6 +23,11 @@ import {
 
 export default function EditorContentBlockSecao(props) {
   useFeather()
+
+  const onChange = props.onChange
+  const onDelete = props.onDelete
+  const onMoveUp = props.onMoveUp
+  const onMoveDown = props.onMoveDown
 
   const [blocks, setBlocks] = useState([])
   
@@ -49,7 +57,7 @@ export default function EditorContentBlockSecao(props) {
 
         setBlocks((blocks) => ([
           ...blocks,
-          { order: null, Block: ContentBlock }
+          { id: nanoid(), order: null, Block: ContentBlock, content: null }
         ]))
       }
     }), []
@@ -65,11 +73,87 @@ export default function EditorContentBlockSecao(props) {
     Log.dev('EditorContentBlockSecao', blocks)
   }, [blocks])
 
+  function updateBlock(index, props) {
+    setBlocks((blocks) => {
+      let newBlocks = blocks.map((block, i) => {
+        if (i !== index) return block
+  
+        return {
+          ...block,
+          ...props
+        }
+      })
+
+      if (onChange) onChange(newBlocks)
+
+      return newBlocks
+    })
+  }
+
+  function deleteBlock(index) {
+    setBlocks((blocks) => {
+      let newBlocks = blocks.filter((block, i) => i !== index)
+
+      if (onChange) onChange(newBlocks)
+
+      return newBlocks
+    })
+  }
+
+  function handleContentBlockMoveUp(index) {
+    setBlocks((blocks) => {
+      let newBlocks = BlockUtil.moveUp(blocks, index)
+      
+      if (onChange) onChange(newBlocks)
+
+      return newBlocks
+    })
+  }
+
+  function handleContentBlockMoveDown(index) {
+    setBlocks((blocks) => {
+      let newBlocks = BlockUtil.moveDown(blocks, index)
+      
+      if (onChange) onChange(newBlocks)
+
+      return newBlocks
+    })
+  }
+
+  function handleContentBlockChange(index, blockContent) {
+    updateBlock(index, { content: blockContent })
+  }
+
+  function handleContentBlockDelete(index) {
+    deleteBlock(index)
+  }
+
+  function handleDelete(event) {
+    if (onDelete) onDelete()
+  }
+  
+  function handleMoveUp(event) {
+    if (onMoveUp) onMoveUp()
+  }
+
+  function handleMoveDown(event) {
+    if (onMoveDown) onMoveDown()
+  }
+
   function renderBlocks() {
     return blocks.map((block, i) => {
       const { Block } = block
 
-      return (<Block key={i}/>)
+      return (
+        <Block
+          key={block.id}
+          initialContent={block.content}
+          onChange={(content) => handleContentBlockChange(i, content)}
+          onDelete={() => handleContentBlockDelete(i)}
+          onMoveUp={() => handleContentBlockMoveUp(i)}
+          onMoveDown={() => handleContentBlockMoveDown(i)}
+        />
+      )
     })
   }
 
@@ -81,11 +165,11 @@ export default function EditorContentBlockSecao(props) {
       </header>
 
       <div className="editor-content-block-controller">
-        <button><i data-feather="chevron-up"></i></button>
-        <button><i data-feather="chevron-down"></i></button>
+        <button onClick={handleMoveUp}><i data-feather="chevron-up"></i></button>
+        <button onClick={handleMoveDown}><i data-feather="chevron-down"></i></button>
       </div>
 
-      <button className="editor-content-block-remove">
+      <button className="editor-content-block-remove" onClick={handleDelete}>
         <i data-feather="x"></i>
       </button>
 

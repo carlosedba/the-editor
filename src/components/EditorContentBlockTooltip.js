@@ -10,6 +10,21 @@ export default function EditorContentBlockTooltip(props) {
 
   const id = props.id
   const place = props.place || 'bottom'
+  const onDelete = props.onDelete
+  const onMoveUp = props.onMoveUp
+  const onMoveDown = props.onMoveDown
+
+  function handleDelete(event) {
+    if (onDelete) onDelete()
+  }
+  
+  function handleMoveUp(event) {
+    if (onMoveUp) onMoveUp()
+  }
+
+  function handleMoveDown(event) {
+    if (onMoveDown) onMoveDown()
+  }
 
   return (
     <ReactTooltip 
@@ -25,13 +40,13 @@ export default function EditorContentBlockTooltip(props) {
       className="editor-content-block-tooltip"
     >
       <header className="editor-content-block-tooltip__header">
-        <button className="editor-content-block-tooltip__action">
+        <button className="editor-content-block-tooltip__action" onClick={handleDelete}>
           <i data-feather="x"></i>
         </button>
-        <button className="editor-content-block-tooltip__action">
+        <button className="editor-content-block-tooltip__action" onClick={handleMoveUp}>
           <i data-feather="chevron-up"></i>
         </button>
-        <button className="editor-content-block-tooltip__action">
+        <button className="editor-content-block-tooltip__action" onClick={handleMoveDown}>
           <i data-feather="chevron-down"></i>
         </button>
       </header>

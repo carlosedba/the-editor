@@ -13,30 +13,36 @@ export default function EditorContentBlockBlocosIcones(props) {
 
   const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES
 
-  const [value, setValue] = useState('')
-  const [items, setItems] = useState([
+  const initialContent = props.initialContent || [
     { icon: '', text: '' }
-  ])
+  ]
+  const onChange = props.onChange
+  const onDelete = props.onDelete
+  const onMoveUp = props.onMoveUp
+  const onMoveDown = props.onMoveDown
+  
+  const [content, setContent] = useState(initialContent)
 
   const fileInputs = useRef([])
 
-  function handleChange(event) {
-    const target = event.currentTarget
-    setValue(target.value)
-  }
-
   function handleAddItemClick(event) {
-    setItems((items) => ([
-      ...items,
-      { icon: '', text: '' }
-    ]))
+    setContent((content) => {
+      let newContent = [
+        ...content,
+        { icon: '', text: '' }
+      ]
+
+      if (onChange) onChange(newContent)
+
+      return newContent
+    })
   }
 
   function handleItemTextChange(event, index) {
     const target = event.currentTarget
         
-    setItems((items) => {
-      return items.map((item, i) => {
+    setContent((content) => {
+      let newContent = content.map((item, i) => {
         if (i === index) {
           return {
             ...item,
@@ -46,6 +52,10 @@ export default function EditorContentBlockBlocosIcones(props) {
         
         return item       
       })
+
+      if (onChange) onChange(newContent)
+
+      return newContent
     })
   }
 
@@ -59,8 +69,8 @@ export default function EditorContentBlockBlocosIcones(props) {
     reader.onload = (event) => {
       let icon = event.target.result
 
-      setItems((items) => {
-        return items.map((item, i) => {
+      setContent((content) => {
+        let newContent = content.map((item, i) => {
           if (i === index) {
             return {
               ...item,
@@ -70,6 +80,10 @@ export default function EditorContentBlockBlocosIcones(props) {
           
           return item       
         })
+
+        if (onChange) onChange(newContent)
+        
+        return newContent
       })
     }
 
@@ -77,7 +91,7 @@ export default function EditorContentBlockBlocosIcones(props) {
   }
 
   function renderItems() {
-    return items.map((item, i) => {
+    return content.map((item, i) => {
       return (
         <div className="editor-content-block-blocos-icones-item" key={i}>
           <div className="editor-content-block-blocos-icones-item__icon">
@@ -101,7 +115,13 @@ export default function EditorContentBlockBlocosIcones(props) {
 
       {renderItems()}
 
-      <EditorContentBlockTooltip id={DND_TYPE} place="left"/>
+      <EditorContentBlockTooltip
+        id={DND_TYPE}
+        onDelete={onDelete}
+        onMoveUp={onMoveUp}
+        onMoveDown={onMoveDown}
+        place="left"
+      />
     </div>
   )
 }

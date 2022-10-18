@@ -13,18 +13,34 @@ export default function EditorContentBlockTexto(props) {
 
   const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_TEXTO
 
-  const [value, setValue] = useState('')
+  const initialContent = props.initialContent || ''
+  const onChange = props.onChange
+  const onDelete = props.onDelete
+  const onMoveUp = props.onMoveUp
+  const onMoveDown = props.onMoveDown
+
+  const [content, setContent] = useState(initialContent)
 
   function handleChange(event) {
     const target = event.currentTarget
-    setValue(target.value)
+
+    let value = target.value
+
+    setContent(value)
+
+    if (onChange) onChange(content)
   }
 
   return (
     <div className="editor-content-block editor-content-block-texto" data-tip={DND_TYPE} data-for={DND_TYPE}>
-      <textarea placeholder="Texto..." value={value} onChange={handleChange}/>
+      <textarea placeholder="Texto..." value={content} onChange={handleChange}/>
 
-      <EditorContentBlockTooltip id={DND_TYPE}/>
+      <EditorContentBlockTooltip
+        id={DND_TYPE}
+        onDelete={onDelete}
+        onMoveUp={onMoveUp}
+        onMoveDown={onMoveDown}
+      />
     </div>
   )
 }

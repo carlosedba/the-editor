@@ -12,6 +12,10 @@ export default function EditorContentBlockBoxConhecer(props) {
   useFeather()
 
   const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_BOX_CONHECER
+  
+  const onDelete = props.onDelete
+  const onMoveUp = props.onMoveUp
+  const onMoveDown = props.onMoveDown
 
   return (
     <div className="editor-content-block editor-content-block-placeholder editor-content-block-box-conhecer" data-tip={DND_TYPE} data-for={DND_TYPE}>
@@ -20,7 +24,12 @@ export default function EditorContentBlockBoxConhecer(props) {
       </div>
       <h1 className="editor-content-block-placeholder__name">Box Conhecer</h1>
 
-      <EditorContentBlockTooltip id={DND_TYPE}/>
+      <EditorContentBlockTooltip
+        id={DND_TYPE}
+        onDelete={onDelete}
+        onMoveUp={onMoveUp}
+        onMoveDown={onMoveDown}
+      />
     </div>
   )
 }
