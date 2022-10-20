@@ -1,6 +1,25 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { useDrop } from 'react-dnd'
 import { nanoid } from 'nanoid'
+
+import {
+  addBlock,
+  updateBlock,
+  deleteBlock,
+} from '@/actions/BlockTree'
+
+import {
+  addBlockCacheEntry,
+  updateBlockCacheEntry,
+  deleteBlockCacheEntry,
+} from '@/actions/BlockCache'
+
+import {
+  addBlockContent,
+  updateBlockContent,
+  deleteBlockContent,
+} from '@/actions/BlockContent'
 
 import EditorContentBlockSecao from '@/components/EditorContentBlockSecao'
 
@@ -23,6 +42,11 @@ import {
 
 export default function EditorContent(props) {
   const [blocks, setBlocks] = useState([])
+  const [index, setIndex] = useState({})
+
+  const blockTree = useSelector(state => state.BlockTree)
+  const blockCache = useSelector(state => state.BlockCache)
+  const blockContent = useSelector(state => state.BlockContent)
 
   const [{ item, itemType, didDrop }, drop] = useDrop(
     () => ({
@@ -39,11 +63,33 @@ export default function EditorContent(props) {
       drop(item, monitor) {
         const itemType = monitor.getItemType()
         const ContentBlock = contentBlocks[itemType]
+        const id = nanoid()
 
-        setBlocks((blocks) => ([
-          ...blocks,
-          { id: nanoid(), order: null, blockType: itemType, Block: ContentBlock, content: null }
-        ]))
+        setBlocks((blocks) => {
+          const lastIndex = blocks.length - 1
+          const projectedIndex = lastIndex + 1
+          const order = projectedIndex + 1
+
+          let newBlocks = [
+            ...blocks,
+            {
+              id: id,
+              order: order, 
+              blockType: itemType,
+              Block: ContentBlock,
+              content: null,
+              addChild: (itemType) => addChild(id, itemType),
+              update: (props) => update(id, props),
+            }
+          ]
+
+          setIndex((index) => ({
+            ...index,
+            [id]: projectedIndex
+          }))
+
+          return newBlocks
+        })
       }
     }), []
   )
@@ -56,6 +102,63 @@ export default function EditorContent(props) {
   useEffect(() => {
     Log.dev('EditorContent', blocks)
   }, [blocks])
+
+  function addChild(id, itemType) {
+    const targetIndex = index[id]
+    
+    const ContentBlock = contentBlocks[itemType]
+    const id = nanoid()
+
+    setBlocks((blocks) => {
+      return blocks.map((block, i) => {
+        if (i !== targetIndex) return block
+  
+        let children = block.children || []
+
+        const lastIndex = children.length - 1
+        const projectedIndex = lastIndex + 1
+        const order = projectedIndex + 1
+
+        children = [
+          ...children,
+          {
+            id: id,
+            order: order, 
+            blockType: itemType,
+            Block: ContentBlock,
+            content: null,
+            addChild: (itemType) => addChild(id, itemType),
+            update: (props) => update(id, props)
+          }
+        ]
+
+        setIndex((index) => ({
+          ...index,
+          [id]: projectedIndex
+        }))
+
+        return {
+          ...block,
+          children: children
+        }
+      })
+    })
+  }
+
+  function update(id, props) {
+    const targetIndex = index[id]
+
+    setBlocks((blocks) => {
+      return blocks.map((block, i) => {
+        if (i !== targetIndex) return block
+  
+        return {
+          ...block,
+          ...props
+        }
+      })
+    })
+  }
 
   function updateBlock(index, props) {
     setBlocks((blocks) => {
