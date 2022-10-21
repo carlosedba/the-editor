@@ -62,103 +62,23 @@ export default function EditorContent(props) {
 
       drop(item, monitor) {
         const itemType = monitor.getItemType()
-        const ContentBlock = contentBlocks[itemType]
+        const Component = contentBlocks[itemType]
         const id = nanoid()
 
-        setBlocks((blocks) => {
-          const lastIndex = blocks.length - 1
-          const projectedIndex = lastIndex + 1
-          const order = projectedIndex + 1
-
-          let newBlocks = [
-            ...blocks,
-            {
-              id: id,
-              order: order, 
-              blockType: itemType,
-              Block: ContentBlock,
-              content: null,
-              addChild: (itemType) => addChild(id, itemType),
-              update: (props) => update(id, props),
-            }
-          ]
-
-          setIndex((index) => ({
-            ...index,
-            [id]: projectedIndex
-          }))
-
-          return newBlocks
-        })
-      }
-    }), []
-  )
-
-  useEffect(() => {
-    if (didDrop) {
-    }
-  }, [didDrop])
-
-  useEffect(() => {
-    Log.dev('EditorContent', blocks)
-  }, [blocks])
-
-  function addChild(id, itemType) {
-    const targetIndex = index[id]
-    
-    const ContentBlock = contentBlocks[itemType]
-    const id = nanoid()
-
-    setBlocks((blocks) => {
-      return blocks.map((block, i) => {
-        if (i !== targetIndex) return block
-  
-        let children = block.children || []
-
-        const lastIndex = children.length - 1
+        const lastIndex = blockTree.length - 1
         const projectedIndex = lastIndex + 1
         const order = projectedIndex + 1
 
-        children = [
-          ...children,
-          {
-            id: id,
-            order: order, 
-            blockType: itemType,
-            Block: ContentBlock,
-            content: null,
-            addChild: (itemType) => addChild(id, itemType),
-            update: (props) => update(id, props)
-          }
-        ]
+        addBlock({
+          id: id,
+          type: itemType,
+          Component: Component
+        })
 
-        setIndex((index) => ({
-          ...index,
-          [id]: projectedIndex
-        }))
-
-        return {
-          ...block,
-          children: children
-        }
-      })
-    })
-  }
-
-  function update(id, props) {
-    const targetIndex = index[id]
-
-    setBlocks((blocks) => {
-      return blocks.map((block, i) => {
-        if (i !== targetIndex) return block
-  
-        return {
-          ...block,
-          ...props
-        }
-      })
-    })
-  }
+        addBlockCacheEntry(id, [projectedIndex])
+      }
+    }), []
+  )
 
   function updateBlock(index, props) {
     setBlocks((blocks) => {
@@ -171,10 +91,6 @@ export default function EditorContent(props) {
         }
       })
     })
-  }
-
-  function deleteBlock(index) {
-    setBlocks((blocks) => blocks.filter((block, i) => i !== index))
   }
 
   function handleContentBlockMoveUp(index) {
@@ -194,11 +110,11 @@ export default function EditorContent(props) {
   }
 
   function renderBlocks() {
-    return blocks.map((block, i) => {
-      const { Block } = block
+    return blockTree.map((block, i) => {
+      const { Component } = block
 
       return (
-        <Block
+        <Component
           key={block.id}
           initialContent={block.content}
           onChange={(content) => handleContentBlockChange(i, content)}
