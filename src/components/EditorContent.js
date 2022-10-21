@@ -115,12 +115,13 @@ export default function EditorContent(props) {
 
       return (
         <Component
-          key={block.id}
+          index={i}
           initialContent={block.content}
           onChange={(content) => handleContentBlockChange(i, content)}
           onDelete={() => handleContentBlockDelete(i)}
           onMoveUp={() => handleContentBlockMoveUp(i)}
           onMoveDown={() => handleContentBlockMoveDown(i)}
+          key={block.id}
         />
       )
     })

@@ -2,6 +2,24 @@ import React, { useState, useEffect } from 'react'
 import { useDrop } from 'react-dnd'
 import { nanoid } from 'nanoid'
 
+import {
+  addBlock,
+  updateBlock,
+  deleteBlock,
+} from '@/actions/BlockTree'
+
+import {
+  addBlockCacheEntry,
+  updateBlockCacheEntry,
+  deleteBlockCacheEntry,
+} from '@/actions/BlockCache'
+
+import {
+  addBlockContent,
+  updateBlockContent,
+  deleteBlockContent,
+} from '@/actions/BlockContent'
+
 import useFeather from '@/hooks/useFeather'
 
 import Log from '@/utils/Log'
@@ -24,6 +42,7 @@ import {
 export default function EditorContentBlockSecao(props) {
   useFeather()
 
+  const index = props.index
   const onChange = props.onChange
   const onDelete = props.onDelete
   const onMoveUp = props.onMoveUp
@@ -53,12 +72,20 @@ export default function EditorContentBlockSecao(props) {
 
       drop(item, monitor) {
         const itemType = monitor.getItemType()
-        const ContentBlock = contentBlocks[itemType]
+        const Component = contentBlocks[itemType]
+        const id = nanoid()
+
+        const lastIndex = blockTree.length - 1
+        const projectedIndex = lastIndex + 1
+        const order = projectedIndex + 1
 
         setBlocks((blocks) => {
           let newBlocks = [
             ...blocks,
-            { id: nanoid(), order: null, blockType: itemType, Block: ContentBlock, content: null }
+            {
+              id: id, 
+              Component: Component
+            }
           ]
 
           if (onChange) onChange(newBlocks)
