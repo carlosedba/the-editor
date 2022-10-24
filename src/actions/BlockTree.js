@@ -1,24 +1,25 @@
 import * as types from '@/actionTypes'
 
-export function addBlock(block = {}) { 
+export function addBlock(id, props = {}) { 
   return {
     type: types.ADD_BLOCK,
-    block: block,
-  }
-}
-
-export function updateBlock(index, props = {}) {
-  return {
-    type: types.UPDATE_BLOCK,
-    index: index,
+    id: id,
     props: props,
   }
 }
 
-export function deleteBlock(index) { 
+export function updateBlock(id, props = {}) {
+  return {
+    type: types.UPDATE_BLOCK,
+    id: id,
+    props: props,
+  }
+}
+
+export function deleteBlock(id) { 
   return {
     type: types.DELETE_BLOCK,
-    index: index,
+    id: id,
   }
 }
 

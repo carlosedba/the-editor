@@ -1,4 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import {
+  addBlock,
+  updateBlock,
+} from '@/actions/BlockTree'
 
 import EditorContentBlockTooltip from '@/components/EditorContentBlockTooltip'
 
@@ -13,17 +19,34 @@ export default function EditorContentBlockBlocosIcones(props) {
 
   const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES
 
-  const initialContent = props.initialContent || [
-    { icon: '', text: '' }
-  ]
-  const onChange = props.onChange
+  const id = props.id
+  const parentId = props.parentId
   const onDelete = props.onDelete
   const onMoveUp = props.onMoveUp
   const onMoveDown = props.onMoveDown
+
+  const blockTree = useSelector(state => state.BlockTree)
   
-  const [content, setContent] = useState(initialContent)
+  const [content, setContent] = useState([
+    { icon: '', text: '' }
+  ])
+
+  const dispatch = useDispatch()
 
   const fileInputs = useRef([])
+
+  useEffect(() => {
+    if (blockTree[id]) {
+      let content = blockTree[id]['content']
+      setContent(content)
+    } else {
+      dispatch(addBlock(id, {
+        type: DND_TYPE,
+        parentId: parentId,
+        content: content
+      }))
+    }
+  }, [])
 
   function handleAddItemClick(event) {
     setContent((content) => {
@@ -32,7 +55,9 @@ export default function EditorContentBlockBlocosIcones(props) {
         { icon: '', text: '' }
       ]
 
-      if (onChange) onChange(newContent)
+      dispatch(updateBlock(id, {
+        content: newContent
+      }))
 
       return newContent
     })
@@ -53,7 +78,9 @@ export default function EditorContentBlockBlocosIcones(props) {
         return item       
       })
 
-      if (onChange) onChange(newContent)
+      dispatch(updateBlock(id, {
+        content: newContent
+      }))
 
       return newContent
     })
@@ -81,7 +108,9 @@ export default function EditorContentBlockBlocosIcones(props) {
           return item       
         })
 
-        if (onChange) onChange(newContent)
+        dispatch(updateBlock(id, {
+          content: newContent
+        }))
         
         return newContent
       })

@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import ReactTooltip from 'react-tooltip'
+import { useDispatch, useSelector } from 'react-redux'
+
+import {
+  addBlock,
+  updateBlock,
+} from '@/actions/BlockTree'
 
 import EditorContentBlockTooltip from '@/components/EditorContentBlockTooltip'
 import EditorContentBlockTooltipInput from '@/components/EditorContentBlockTooltipInput'
@@ -15,15 +20,32 @@ export default function EditorContentBlockBotao(props) {
 
   const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_BOTAO
 
-  const initialContent = props.initialContent || {
-    name: '', url: ''
-  }
-  const onChange = props.onChange
+  const id = props.id
+  const parentId = props.parentId
   const onDelete = props.onDelete
   const onMoveUp = props.onMoveUp
   const onMoveDown = props.onMoveDown
 
-  const [content, setContent] = useState(initialContent)
+  const blockTree = useSelector(state => state.BlockTree)
+
+  const [content, setContent] = useState({
+    name: '', url: ''
+  })
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (blockTree[id]) {
+      let content = blockTree[id]['content']
+      setContent(content)
+    } else {
+      dispatch(addBlock(id, {
+        type: DND_TYPE,
+        parentId: parentId,
+        content: content
+      }))
+    }
+  }, [])
 
   function handleNameChange(event) {
     const target = event.currentTarget
@@ -36,7 +58,9 @@ export default function EditorContentBlockBotao(props) {
         name: value
       }
 
-      if (onChange) onChange(newContent)
+      dispatch(updateBlock(id, {
+        content: newContent
+      }))
 
       return newContent
     })
@@ -49,7 +73,9 @@ export default function EditorContentBlockBotao(props) {
         url: value
       }
 
-      if (onChange) onChange(newContent)
+      dispatch(updateBlock(id, {
+        content: newContent
+      }))
 
       return newContent
     })

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useDrop } from 'react-dnd'
 import { nanoid } from 'nanoid'
 
@@ -14,12 +14,6 @@ import {
   updateBlockCacheEntry,
   deleteBlockCacheEntry,
 } from '@/actions/BlockCache'
-
-import {
-  addBlockContent,
-  updateBlockContent,
-  deleteBlockContent,
-} from '@/actions/BlockContent'
 
 import EditorContentBlockSecao from '@/components/EditorContentBlockSecao'
 
@@ -41,14 +35,13 @@ import {
 } from '@/dndTypes'
 
 export default function EditorContent(props) {
-  const [blocks, setBlocks] = useState([])
-  const [index, setIndex] = useState({})
-
-  const blockTree = useSelector(state => state.BlockTree)
   const blockCache = useSelector(state => state.BlockCache)
-  const blockContent = useSelector(state => state.BlockContent)
 
-  const [{ item, itemType, didDrop }, drop] = useDrop(
+  const [blocks, setBlocks] = useState([])
+
+  const dispatch = useDispatch()
+
+  const [collectedProps, drop] = useDrop(
     () => ({
       accept: DND_EDITOR_SIDEBAR_BLOCK_SECAO,
 
@@ -62,66 +55,134 @@ export default function EditorContent(props) {
 
       drop(item, monitor) {
         const itemType = monitor.getItemType()
-        const Component = contentBlocks[itemType]
-        const id = nanoid()
-
-        const lastIndex = blockTree.length - 1
-        const projectedIndex = lastIndex + 1
-        const order = projectedIndex + 1
-
-        addBlock({
-          id: id,
-          type: itemType,
-          Component: Component
-        })
-
-        addBlockCacheEntry(id, [projectedIndex])
+        _addBlock(itemType)
       }
     }), []
   )
 
-  function updateBlock(index, props) {
+  function _addBlock(type) {
+    const Component = contentBlocks[type]
+    const id = nanoid()
+
     setBlocks((blocks) => {
-      return blocks.map((block, i) => {
-        if (i !== index) return block
-  
-        return {
-          ...block,
-          ...props
+      const lastIndex = blocks.length - 1
+      const projectedIndex = lastIndex + 1
+      //const order = projectedIndex + 1
+
+      dispatch(addBlockCacheEntry(id, projectedIndex))
+
+      let newArr = [
+        ...blocks,
+        {
+          id: id,
+          Component: Component
         }
-      })
+      ]
+
+      return newArr
     })
   }
 
-  function handleContentBlockMoveUp(index) {
-    setBlocks((blocks) => BlockUtil.moveUp(blocks, index))
+  function _updateBlock(id, props) {
+    const index = blockCache[id]
+
+    setBlocks((blocks) => {
+      let newArr = [...blocks]
+
+      newArr[index] = [
+        ...newArr[index],
+        ...props
+      ]
+
+      return newArr
+    })
   }
 
-  function handleContentBlockMoveDown(index) {
-    setBlocks((blocks) => BlockUtil.moveDown(blocks, index))
+  function _moveBlockUp(id) {
+    const index = blockCache[id]
+
+    setBlocks((blocks) => {
+      let newArr = [...blocks]
+      let newIndex = index - 1
+
+      if (newIndex >= 0) {
+        let element = blocks[index]
+    
+        newArr.splice(index, 1);
+        newArr.splice(newIndex, 0, element)
+
+        for (let i = 0; i < newArr.length; i++) {
+          dispatch(updateBlockCacheEntry(newArr[i]['id'], i))
+        }   
+    }
+
+      return newArr
+    })
   }
 
-  function handleContentBlockChange(index, blockContent) {
-    updateBlock(index, { content: blockContent })
+  function _moveBlockDown(id) {
+    const index = blockCache[id]
+
+    setBlocks((blocks) => {
+      let newArr = [...blocks]
+      let newIndex = index + 1
+
+      if (newIndex < blocks.length) {
+        let element = blocks[index]
+    
+        newArr.splice(index, 1);
+        newArr.splice(newIndex, 0, element)
+        
+        for (let i = 0; i < newArr.length; i++) {
+          dispatch(updateBlockCacheEntry(newArr[i]['id'], i))
+        }   
+      }
+
+      return newArr
+    })
   }
 
-  function handleContentBlockDelete(index) {
-    deleteBlock(index)
+  function _deleteBlock(id) {
+    const index = blockCache[id]
+
+    setBlocks((blocks) => {
+      let newArr = blocks.filter((block, i) => i !== index)
+        
+      dispatch(deleteBlockCacheEntry(id))
+
+      for (let i = 0; i < newArr.length; i++) {
+        dispatch(updateBlockCacheEntry(newArr[i]['id'], i))
+      }   
+
+      dispatch(deleteBlock(id))
+
+      return newArr
+    })
+  }
+
+  function handleContentBlockMoveUp(id) {
+    _moveBlockUp(id)
+  }
+
+  function handleContentBlockMoveDown(id) {
+    _moveBlockDown(id)
+  }
+
+  function handleContentBlockDelete(id) {
+    _deleteBlock(id)
   }
 
   function renderBlocks() {
-    return blockTree.map((block, i) => {
-      const { Component } = block
+    return blocks.map((block, i) => {
+      const { id, Component } = block
 
       return (
         <Component
-          index={i}
-          initialContent={block.content}
-          onChange={(content) => handleContentBlockChange(i, content)}
-          onDelete={() => handleContentBlockDelete(i)}
-          onMoveUp={() => handleContentBlockMoveUp(i)}
-          onMoveDown={() => handleContentBlockMoveDown(i)}
-          key={block.id}
+          id={id}
+          onDelete={() => handleContentBlockDelete(id)}
+          onMoveUp={() => handleContentBlockMoveUp(id)}
+          onMoveDown={() => handleContentBlockMoveDown(id)}
+          key={id}
         />
       )
     })

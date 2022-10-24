@@ -1,38 +1,41 @@
 import * as types from '@/actionTypes'
 
-const INITIAL_STATE = []
+const INITIAL_STATE = {}
 
 export default function(state = INITIAL_STATE, action) {
-  let block = null
-  let index = null
+  let id = null
   let props = null
+  let newState = null
 
   switch (action.type) {
     case types.ADD_BLOCK:
-      block = action.block
-
-      return [
-        ...state,
-        block
-      ]
-
-    case types.UPDATE_BLOCK:
-      index = action.index
+      id = action.id
       props = action.props
 
-      return state.map((block, i) => {
-        if (i !== index) return block
-  
-        return {
-          ...block,
+      return {
+        ...state,
+        [id]: props
+      }
+
+    case types.UPDATE_BLOCK:
+      id = action.id
+      props = action.props
+
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
           ...props
         }
-      })
+      }
 
     case types.DELETE_BLOCK:
-      index = action.index
+      id = action.id
+      newState = { ...state }
 
-      return state.filter((block, i) => i !== index)
+      delete newState[id]
+
+      return newState
 
     default:
       return state

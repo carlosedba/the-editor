@@ -23,10 +23,7 @@ export default function(state = INITIAL_STATE, action) {
 
       return {
         ...state,
-        [id]: {
-          ...state[id],
-          props
-        }
+        [id]: props
       }
 
     case types.DELETE_BLOCK_CACHE_ENTRY:

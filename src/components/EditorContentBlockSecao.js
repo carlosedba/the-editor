@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDrop } from 'react-dnd'
 import { nanoid } from 'nanoid'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
   addBlock,
@@ -13,12 +14,6 @@ import {
   updateBlockCacheEntry,
   deleteBlockCacheEntry,
 } from '@/actions/BlockCache'
-
-import {
-  addBlockContent,
-  updateBlockContent,
-  deleteBlockContent,
-} from '@/actions/BlockContent'
 
 import useFeather from '@/hooks/useFeather'
 
@@ -42,15 +37,21 @@ import {
 export default function EditorContentBlockSecao(props) {
   useFeather()
 
-  const index = props.index
-  const onChange = props.onChange
+  const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_SECAO
+
+  const id = props.id
   const onDelete = props.onDelete
   const onMoveUp = props.onMoveUp
   const onMoveDown = props.onMoveDown
 
+  const blockTree = useSelector(state => state.BlockTree)
+  const blockCache = useSelector(state => state.BlockCache)
+
   const [blocks, setBlocks] = useState([])
+
+  const dispatch = useDispatch()
   
-  const [{ item, itemType, didDrop }, drop] = useDrop(
+  const [collectedProps, drop] = useDrop(
     () => ({
       accept: [
         DND_EDITOR_SIDEBAR_BLOCK_TITULO,
@@ -72,93 +73,129 @@ export default function EditorContentBlockSecao(props) {
 
       drop(item, monitor) {
         const itemType = monitor.getItemType()
-        const Component = contentBlocks[itemType]
-        const id = nanoid()
-
-        const lastIndex = blockTree.length - 1
-        const projectedIndex = lastIndex + 1
-        const order = projectedIndex + 1
-
-        setBlocks((blocks) => {
-          let newBlocks = [
-            ...blocks,
-            {
-              id: id, 
-              Component: Component
-            }
-          ]
-
-          if (onChange) onChange(newBlocks)
-
-          return newBlocks
-        })
+        _addBlock(itemType)
       }
     }), []
   )
 
   useEffect(() => {
-    if (didDrop) {
-      Log.dev('secao', didDrop, itemType)
+    if (!blockTree[id]) {
+      dispatch(addBlock(id, {
+        type: DND_TYPE,
+      }))
     }
-  }, [didDrop])
+  }, [])
 
-  useEffect(() => {
-    Log.dev('EditorContentBlockSecao', blocks)
-  }, [blocks])
+  function _addBlock(type) {
+    const Component = contentBlocks[type]
+    const id = nanoid()
 
-  function updateBlock(index, props) {
     setBlocks((blocks) => {
-      let newBlocks = blocks.map((block, i) => {
-        if (i !== index) return block
-  
-        return {
-          ...block,
-          ...props
+      const lastIndex = blocks.length - 1
+      const projectedIndex = lastIndex + 1
+      //const order = projectedIndex + 1
+
+      dispatch(addBlockCacheEntry(id, projectedIndex))
+
+      let newArr = [
+        ...blocks,
+        {
+          id: id,
+          Component: Component
         }
-      })
+      ]
 
-      if (onChange) onChange(newBlocks)
-
-      return newBlocks
+      return newArr
     })
   }
 
-  function deleteBlock(index) {
+  function _updateBlock(id, props) {
+    const index = blockCache[id]
+
     setBlocks((blocks) => {
-      let newBlocks = blocks.filter((block, i) => i !== index)
+      let newArr = [...blocks]
 
-      if (onChange) onChange(newBlocks)
+      newArr[index] = [
+        ...newArr[index],
+        ...props
+      ]
 
-      return newBlocks
+      return newArr
     })
   }
 
-  function handleContentBlockMoveUp(index) {
+  function _moveBlockUp(id) {
+    const index = blockCache[id]
+
     setBlocks((blocks) => {
-      let newBlocks = BlockUtil.moveUp(blocks, index)
-      
-      if (onChange) onChange(newBlocks)
+      let newArr = [...blocks]
+      let newIndex = index - 1
 
-      return newBlocks
+      if (newIndex >= 0) {
+        let element = blocks[index]
+    
+        newArr.splice(index, 1);
+        newArr.splice(newIndex, 0, element)
+
+        for (let i = 0; i < newArr.length; i++) {
+          dispatch(updateBlockCacheEntry(newArr[i]['id'], i))
+        }   
+    }
+
+      return newArr
     })
   }
 
-  function handleContentBlockMoveDown(index) {
+  function _moveBlockDown(id) {
+    const index = blockCache[id]
+
     setBlocks((blocks) => {
-      let newBlocks = BlockUtil.moveDown(blocks, index)
-      
-      if (onChange) onChange(newBlocks)
+      let newArr = [...blocks]
+      let newIndex = index + 1
 
-      return newBlocks
+      if (newIndex < blocks.length) {
+        let element = blocks[index]
+    
+        newArr.splice(index, 1);
+        newArr.splice(newIndex, 0, element)
+        
+        for (let i = 0; i < newArr.length; i++) {
+          dispatch(updateBlockCacheEntry(newArr[i]['id'], i))
+        }   
+      }
+
+      return newArr
     })
   }
 
-  function handleContentBlockChange(index, blockContent) {
-    updateBlock(index, { content: blockContent })
+  function _deleteBlock(id) {
+    const index = blockCache[id]
+
+    setBlocks((blocks) => {
+      let newArr = blocks.filter((block, i) => i !== index)
+        
+      dispatch(deleteBlockCacheEntry(id))
+
+      for (let i = 0; i < newArr.length; i++) {
+        dispatch(updateBlockCacheEntry(newArr[i]['id'], i))
+      }   
+
+      dispatch(deleteBlock(id))
+
+      return newArr
+    })
   }
 
-  function handleContentBlockDelete(index) {
-    deleteBlock(index)
+  function handleContentBlockMoveUp(id) {
+    _moveBlockUp(id)
+  }
+
+  function handleContentBlockMoveDown(id) {
+    _moveBlockDown(id)
+  }
+
+  function handleContentBlockDelete(id) {
+    _deleteBlock(id)
   }
 
   function handleDelete(event) {
@@ -174,17 +211,19 @@ export default function EditorContentBlockSecao(props) {
   }
 
   function renderBlocks() {
+    let parentId = id
+
     return blocks.map((block, i) => {
-      const { Block } = block
+      const { id, Component } = block
 
       return (
-        <Block
-          key={block.id}
-          initialContent={block.content}
-          onChange={(content) => handleContentBlockChange(i, content)}
-          onDelete={() => handleContentBlockDelete(i)}
-          onMoveUp={() => handleContentBlockMoveUp(i)}
-          onMoveDown={() => handleContentBlockMoveDown(i)}
+        <Component
+          id={id}
+          parentId={parentId}
+          onDelete={() => handleContentBlockDelete(id)}
+          onMoveUp={() => handleContentBlockMoveUp(id)}
+          onMoveDown={() => handleContentBlockMoveDown(id)}
+          key={id}
         />
       )
     })
