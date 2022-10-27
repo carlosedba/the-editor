@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import Handlebars from 'handlebars'
 
 import LogoFaculdades from '@/assets/svg/logo_faculdades.svg'
 
@@ -6,6 +8,12 @@ import useFeather from '@/hooks/useFeather'
 
 export default function EditorNavbar(props) {
   useFeather()
+
+  const blockTree = useSelector(state => state.BlockTree)
+
+  function copiar() {
+    console.log(blockTree)
+  }
 
   return (
     <nav className="editor-navbar">
@@ -34,7 +42,7 @@ export default function EditorNavbar(props) {
           </div>
           Salvar
         </button>
-        <button className="btn btn--one">
+        <button className="btn btn--one" onClick={copiar}>
           <div className="btn__icon">
             <i data-feather="copy"></i>
           </div>
