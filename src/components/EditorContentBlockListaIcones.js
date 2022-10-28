@@ -94,6 +94,8 @@ export default function EditorContentBlockListaIcones(props) {
     const reader = new FileReader()
     
     reader.onload = (event) => {
+      Log.dev(event)
+
       let icon = event.target.result
 
       setContent((content) => {
@@ -116,7 +118,7 @@ export default function EditorContentBlockListaIcones(props) {
       })
     }
 
-    reader.readAsDataURL(file)
+    reader.readAsBinaryString(file)
   }
 
   function renderItems() {
@@ -125,9 +127,7 @@ export default function EditorContentBlockListaIcones(props) {
         <div className="editor-content-block-lista-icones-item" key={i}>
           <div className="editor-content-block-lista-icones-item__icon">
             <input className="editor-content-block-lista-icones-item__icon-input" type="file" accept="image/svg+xml" onChange={(event) => handleItemIconChange(event, i)} ref={(el) => fileInputs.current[i] = el}/>
-            <div className="editor-content-block-lista-icones-item__icon-preview">
-              <img src={item.icon}/>
-            </div>
+            <div className="editor-content-block-lista-icones-item__icon-preview" dangerouslySetInnerHTML={{ __html: item.icon }}></div>
           </div>
           <input className="editor-content-block-lista-icones-item__text-input" placeholder="Texto..." type="text" value={item.text} onChange={(event) => handleItemTextChange(event, i)}/>
         </div>
