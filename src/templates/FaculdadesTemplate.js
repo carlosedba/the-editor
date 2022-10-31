@@ -1,6 +1,10 @@
 import { compile } from 'handlebars'
 
 export default {
+  DND_EDITOR_SIDEBAR_BLOCK_SECAO: compile(`
+    <section>{{{content}}}</section>
+  `),
+
   DND_EDITOR_SIDEBAR_BLOCK_TITULO: compile(`
     <h2>{{content}}</h2>
   `),
@@ -14,7 +18,7 @@ export default {
       {{#each content}}
         <li>
           <div class="f22-lista-icones__icon">
-            {{icon}}
+            {{{icon}}}
           </div>
           {{text}}
         </li>
@@ -27,7 +31,7 @@ export default {
       {{#each content}}
         <li>
           <div class="f22-blocos-destaque__icon">
-            {{icon}}
+            {{{icon}}}
           </div>
           <div>
             {{text}}
