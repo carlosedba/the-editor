@@ -40,12 +40,14 @@ export default function EditorContentBlockSecao(props) {
   const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_SECAO
 
   const id = props.id
+  const children = props.children
   const onDelete = props.onDelete
   const onMoveUp = props.onMoveUp
   const onMoveDown = props.onMoveDown
 
   const blockTree = useSelector(state => state.BlockTree)
   const blockCache = useSelector(state => state.BlockCache)
+  const loadedTree = useSelector(state => state.LoadedTree)
 
   const [blocks, setBlocks] = useState([])
 
@@ -86,9 +88,17 @@ export default function EditorContentBlockSecao(props) {
     }
   }, [])
 
-  function _addBlock(type) {
+  useEffect(() => {
+    if (children) {
+      for (let block of children) {
+        _addBlock(block.type, block.id)
+      }
+    }
+  }, [children])
+
+  function _addBlock(type, id) {
     const Component = contentBlocks[type]
-    const id = nanoid()
+    if (!id) id = nanoid()
 
     setBlocks((blocks) => {
       const lastIndex = blocks.length - 1

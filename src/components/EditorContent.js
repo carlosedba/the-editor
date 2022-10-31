@@ -35,7 +35,9 @@ import {
 } from '@/dndTypes'
 
 export default function EditorContent(props) {
+  const blockTree = useSelector(state => state.BlockCache)
   const blockCache = useSelector(state => state.BlockCache)
+  const loadedTree = useSelector(state => state.LoadedTree)
 
   const [blocks, setBlocks] = useState([])
 
@@ -60,9 +62,17 @@ export default function EditorContent(props) {
     }), []
   )
 
-  function _addBlock(type) {
+  useEffect(() => {
+    if (loadedTree) {
+      for (let block of loadedTree) {
+        _addBlock(block.type, block.id, block.children)
+      }
+    }
+  }, [loadedTree])
+
+  function _addBlock(type, id, children) {
     const Component = contentBlocks[type]
-    const id = nanoid()
+    if (!id) id = nanoid()
 
     setBlocks((blocks) => {
       const lastIndex = blocks.length - 1
@@ -71,12 +81,18 @@ export default function EditorContent(props) {
 
       dispatch(addBlockCacheEntry(id, projectedIndex))
 
+      let obj = {
+        id: id,
+        Component: Component,
+      }
+
+      if (children) {
+        obj.children = children
+      }
+
       let newArr = [
         ...blocks,
-        {
-          id: id,
-          Component: Component
-        }
+        obj
       ]
 
       return newArr
@@ -174,11 +190,12 @@ export default function EditorContent(props) {
 
   function renderBlocks() {
     return blocks.map((block, i) => {
-      const { id, Component } = block
+      const { id, Component, children } = block
 
       return (
         <Component
           id={id}
+          children={children}
           onDelete={() => handleContentBlockDelete(id)}
           onMoveUp={() => handleContentBlockMoveUp(id)}
           onMoveDown={() => handleContentBlockMoveDown(id)}

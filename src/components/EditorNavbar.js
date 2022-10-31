@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import Handlebars from 'handlebars'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { saveAs } from 'file-saver'
 
 import LogoFaculdades from '@/assets/svg/logo_faculdades.svg'
 
@@ -9,6 +11,9 @@ import useFeather from '@/hooks/useFeather'
 import FaculdadesTemplate from '@/templates/FaculdadesTemplate'
 
 import Log from '@/utils/Log'
+import { addBlock } from '@/actions/BlockTree'
+import { addBlockCacheEntry } from '@/actions/BlockCache'
+import { load } from '@/actions/LoadedTree'
 
 export default function EditorNavbar(props) {
   useFeather()
@@ -16,29 +21,12 @@ export default function EditorNavbar(props) {
   const blockCache = useSelector(state => state.BlockCache)
   const blockTree = useSelector(state => state.BlockTree)
 
-  function groupBy(objectArray, property) {
-    return objectArray.reduce((acc, obj) => {
-      const key = obj[property]
-      const curGroup = acc[key] || []
-  
-      return {
-        ...acc,
-        [key]: [...curGroup, obj].sort((a, b) => a.order - b.order)
-      }
-    }, {})
-  }
+  const [html, setHtml] = useState('')
+  const [tree, setTree] = useState([])
 
-  function tree(objectArray, property) {
-    return objectArray.reduce((acc, obj) => {
-      const key = obj[property]
-      const curGroup = acc[key] || []
-  
-      return {
-        ...acc,
-        [key]: [...curGroup, obj].sort((a, b) => a.order - b.order)
-      }
-    }, {})
-  }
+  const carregarInput = useRef(null)
+
+  const dispatch = useDispatch()
 
   function arrayToTree(arr, parentId) {
     return arr.filter(item => item.parentId === parentId)
@@ -48,36 +36,6 @@ export default function EditorNavbar(props) {
           children: arrayToTree(arr, child.id)
         }
       ))
-  }
-
-  function renderHtml(str, templates = {}, obj = {}, parent) {
-    let type = obj.type
-    let content = obj.content || {}
-    let template = templates[type]
-
-    Log.dev(type, obj)
-
-    str = str + template({ content: content })
-    Log.dev(str)
-
-    if (obj.children && Array.isArray(obj.children) && obj.children.length > 0) {
-      for (let i = 0; i < obj.children.length; i++) {
-        let child = obj.children[i]
-        
-        return renderHtml(str, templates, child, obj)
-      }
-    } else if (parent) {
-      return renderHtml(str, templates, parent)
-    }
-
-    return str
-  }
-
-  function iter(level) {
-    return function (node)  {
-        console.log('node', level, node)
-        (node.children || []).forEach(iter(level + 1))
-    }
   }
 
   function gerarHtml(templates, arr) {
@@ -112,7 +70,7 @@ export default function EditorNavbar(props) {
     return html
   }
 
-  function copiarParaWebP() {
+  function generateTree() {
     let arr = []
     let ids = Object.keys(blockTree)
     
@@ -125,18 +83,60 @@ export default function EditorNavbar(props) {
     }
 
     let tree = arrayToTree(arr)
-    Log.dev(tree)
 
-    let nodeHtml = ''
-    for (let node of tree) {
-      //nodeHtml = renderHtml(nodeHtml, FaculdadesTemplate, node)
-      Log.dev(nodeHtml)
+    return tree
+  }
+
+  function copiarParaWebP() {
+    let tree = generateTree()
+    let html = gerarHtml(FaculdadesTemplate, tree)
+    setHtml(html)
+  }
+
+  function salvar() { 
+    let tree = generateTree()
+
+    let json = JSON.stringify({
+      blockTree: blockTree,
+      blockCache: blockCache,
+      tree: tree,
+    })
+
+    let blob = new Blob([json], {
+      type: 'application/json',
+    })
+
+    saveAs(blob, 'teste.json')
+  }
+
+  function handleCarregarChange(event) {
+    const input = carregarInput.current
+    const files = input.files
+    const file = files[0]
+
+    const reader = new FileReader()
+    
+    reader.onload = (event) => {
+      let json = event.target.result
+      let obj = JSON.parse(json)
+      let blockTree = obj.blockTree
+      let blockCache = obj.blockCache
+      let tree = obj.tree
+      
+      let keys = Object.keys(blockTree)
+      for (let key of keys) {
+        dispatch(addBlock(key, blockTree[key]))
+      }
+      
+      keys = Object.keys(blockCache)
+      for (let key of keys) {
+        dispatch(addBlockCacheEntry(key, blockCache[key]))
+      }
+
+      dispatch(load(tree))
     }
-    Log.dev('final', nodeHtml)
 
-    //tree.forEach(iter(0))
-
-    teste3(tree)
+    reader.readAsText(file)
   }
 
   return (
@@ -159,19 +159,22 @@ export default function EditorNavbar(props) {
             <i data-feather="upload"></i>
           </div>
           Carregar
+          <input type="file" accept="application/json" onChange={handleCarregarChange} ref={carregarInput}/>
         </button>
-        <button className="btn btn--one">
+        <button className="btn btn--one" onClick={salvar}>
           <div className="btn__icon">
             <i data-feather="save"></i>
           </div>
           Salvar
         </button>
-        <button className="btn btn--one" onClick={copiarParaWebP}>
-          <div className="btn__icon">
-            <i data-feather="copy"></i>
-          </div>
-          Copiar para o WebP
-        </button>
+        <CopyToClipboard text={html}>
+          <button className="btn btn--one" onClick={copiarParaWebP}>
+            <div className="btn__icon">
+              <i data-feather="copy"></i>
+            </div>
+            Copiar para o WebP
+          </button>
+        </CopyToClipboard>
       </div>
     </nav>
   )
