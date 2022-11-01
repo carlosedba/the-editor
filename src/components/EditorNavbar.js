@@ -36,6 +36,7 @@ export default function EditorNavbar(props) {
           children: arrayToTree(arr, child.id)
         }
       ))
+      .sort((a, b) => a.order - b.order)
   }
 
   function gerarHtml(templates, arr) {
