@@ -14,8 +14,9 @@ import {
   DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES,
   DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES,
   DND_EDITOR_SIDEBAR_BLOCK_BOTAO,
+  DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE,
   DND_EDITOR_SIDEBAR_BLOCK_BOX_CONHECER,
-  DND_EDITOR_SIDEBAR_BLOCK_BOX_DESCONTOS
+  DND_EDITOR_SIDEBAR_BLOCK_BOX_DESCONTOS,
 } from '@/dndTypes'
 
 export default function Editor(props) {
@@ -36,6 +37,7 @@ export default function Editor(props) {
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES} icon="list" name="Lista com ícones"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES} icon="square" name="Blocos com ícones"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_BOTAO} icon="mouse-pointer" name="Botão"/>
+                <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE} icon="youtube" name="Vídeo do YouTube"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_BOX_CONHECER} icon="box" name="Box Conhecer"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_BOX_DESCONTOS} icon="box" name="Box Descontos"/>
               </EditorSidebarBlocks>

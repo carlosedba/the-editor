@@ -45,6 +45,10 @@ export default {
     <a class="f22-btn f22-btn--one" href="{{content.url}}">{{content.name}}</a>
   `),
   
+  DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE: compile(`
+    <iframe src="https://www.youtube.com/embed/{{content.videoId}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
+  `),
+  
   DND_EDITOR_SIDEBAR_BLOCK_BOX_CONHECER: compile(`
     <div class="f22-page-box f22-page-box--conhecer">
       <h1 class="f22-page-box__title">Quer conhecer mais?</h1>

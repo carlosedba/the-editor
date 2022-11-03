@@ -1,0 +1,54 @@
+@import 'globals';
+
+.editor-content-block-youtube {
+  padding: 0 20px;
+  width: calc(100% - 40px - 40px);
+  height: 150px;
+  margin: 0 auto;
+  border-radius: 4px;
+  border: 1px solid $colorBlack;
+}
+
+.editor-content-block-youtube__header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.editor-content-block-youtube__icon {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.editor-content-block-youtube__icon svg {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: 100%;
+}
+
+.editor-content-block-youtube__name {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.editor-content-block-youtube__input {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.editor-content-block-youtube__input label {
+  margin-bottom: 2px;
+  color: $colorJet;
+}
+
+.editor-content-block-youtube__input input {
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: 1px solid $colorJet;
+  font-family: 'serenity', sans-serif;
+  font-size: 18px;
+}
