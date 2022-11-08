@@ -94,8 +94,6 @@ export default function EditorContentBlockListaIcones(props) {
     const reader = new FileReader()
     
     reader.onload = (event) => {
-      Log.dev(event)
-
       let icon = event.target.result
 
       setContent((content) => {

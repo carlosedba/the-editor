@@ -116,7 +116,7 @@ export default function EditorContentBlockBlocosIcones(props) {
       })
     }
 
-    reader.readAsDataURL(file)
+    reader.readAsBinaryString(file)
   }
 
   function renderItems() {
@@ -125,9 +125,7 @@ export default function EditorContentBlockBlocosIcones(props) {
         <div className="editor-content-block-blocos-icones-item" key={i}>
           <div className="editor-content-block-blocos-icones-item__icon">
             <input className="editor-content-block-blocos-icones-item__icon-input" type="file" accept="image/svg+xml" onChange={(event) => handleItemIconChange(event, i)} ref={(el) => fileInputs.current[i] = el}/>
-            <div className="editor-content-block-blocos-icones-item__icon-preview">
-              <img src={item.icon}/>
-            </div>
+            <div className="editor-content-block-blocos-icones-item__icon-preview" dangerouslySetInnerHTML={{ __html: item.icon }}></div>
           </div>
           <textarea className="editor-content-block-blocos-icones-item__text-input" placeholder="Texto..." type="text" value={item.text} onChange={(event) => handleItemTextChange(event, i)}/>
         </div>
