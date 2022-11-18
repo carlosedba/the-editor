@@ -14,7 +14,7 @@ module.exports = function (env) {
 
 		output: {
 			filename: '[name].[contenthash].js',
-			publicPath: '/'
+			publicPath: ''
 		},
 
 		optimization: {

@@ -37,6 +37,9 @@ export default function(state = INITIAL_STATE, action) {
 
       return newState
 
+    case types.RESET_BLOCK_TREE:
+      return INITIAL_STATE
+
     default:
       return state
   }

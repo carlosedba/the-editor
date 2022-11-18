@@ -8,11 +8,15 @@ import Log from '@/utils/Log'
 export default function EditorContentBlockTooltipInput(props) {
   useFeather()
 
-  const initialValue = props.initialValue || ''
+  const initialValue = props.initialValue
   const label = props.label
   const onChange = props.onChange
 
-  const [value, setValue] = useState(initialValue)
+  const [value, setValue] = useState('')
+
+  useEffect(() => {
+    if (initialValue) setValue(initialValue)
+  }, [initialValue])
 
   function handleChange(event) {
     const target = event.currentTarget

@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { nanoid } from 'nanoid'
+
+import {
+  addBlock,
+  updateBlock,
+} from '@/actions/BlockTree'
 
 import EditorNavbar from '@/components/EditorNavbar'
 import EditorSidebar from '@/components/EditorSidebar'
 import EditorSidebarGroup from '@/components/EditorSidebarGroup'
 import EditorSidebarBlocks from '@/components/EditorSidebarBlocks'
 import EditorSidebarBlock from '@/components/EditorSidebarBlock'
+import EditorSidebarTextInput from '@/components/EditorSidebarTextInput'
 import EditorContent from '@/components/EditorContent'
+
+import { VERSION } from '@/globals'
 
 import {
   DND_EDITOR_SIDEBAR_BLOCK_SECAO,
@@ -17,9 +27,48 @@ import {
   DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE,
   DND_EDITOR_SIDEBAR_BLOCK_BOX_CONHECER,
   DND_EDITOR_SIDEBAR_BLOCK_BOX_DESCONTOS,
+  DND_EDITOR_BLOCK_MODAL_INSCRICAO,
 } from '@/dndTypes'
 
 export default function Editor(props) {
+  const [idModalInscricao, setIdModalInscricao] = useState(nanoid())
+  const [contentModalInscricao, setContentModalInscricao] = useState({})
+
+  const page = useSelector((state) => state.Page)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    adicionarModalInscricao()
+  }, [])
+
+  useEffect(() => {
+    dispatch(updateBlock(idModalInscricao, {
+      content: contentModalInscricao
+    }))
+  }, [contentModalInscricao])
+
+  function adicionarModalInscricao() {
+    dispatch(addBlock(idModalInscricao, {
+      type: DND_EDITOR_BLOCK_MODAL_INSCRICAO,
+      content: {
+        tipoCurso: page.tipoCurso,
+        nomeCurso: page.nomeCurso,
+        linkInscricaoVestibularTradicional: page.linkInscricaoVestibularTradicional,
+        linkInscricaoVestibularOnline: page.linkInscricaoVestibularOnline,
+        linkInscricaoBolsaEnem: page.linkInscricaoBolsaEnem,
+        linkInscricaoPortadorDiploma: page.linkInscricaoPortadorDiploma,
+      }
+    }))
+  }
+
+  function atualizarModalInscricao(name, value) {
+    setContentModalInscricao({
+      ...contentModalInscricao,
+      [name]: value
+    })
+  }
+
   return (
     <div className="editor">
       <header className="editor__header">
@@ -50,9 +99,23 @@ export default function Editor(props) {
         </div>
 
         <div className="editor__right">
-          <EditorSidebar side="right"></EditorSidebar>
+          <EditorSidebar side="right">
+            <EditorSidebarGroup title="Geral" type="with-division">
+              <EditorSidebarTextInput name="tipoCurso" label="Tipo do Curso" onChange={atualizarModalInscricao}/>
+              <EditorSidebarTextInput name="nomeCurso" label="Nome do Curso" onChange={atualizarModalInscricao}/>
+            </EditorSidebarGroup>
+            <EditorSidebarGroup title="Links de inscrição" type="with-division">
+              <EditorSidebarTextInput name="linkInscricaoVestibularTradicional" label="Vestibular Tradicional" onChange={atualizarModalInscricao}/>
+              <EditorSidebarTextInput name="linkInscricaoVestibularOnline" label="Vestibular Online" onChange={atualizarModalInscricao}/>
+              <EditorSidebarTextInput name="linkInscricaoBolsaEnem" label="Bolsa do ENEM" onChange={atualizarModalInscricao}/>
+              <EditorSidebarTextInput name="linkInscricaoTransferencia" label="Transferência" onChange={atualizarModalInscricao}/>
+              <EditorSidebarTextInput name="linkInscricaoPortadorDiploma" label="Portador de Diploma" onChange={atualizarModalInscricao}/>
+            </EditorSidebarGroup>
+          </EditorSidebar>
           </div>
       </div>
+
+      <div className="editor__version">EDITOR - VERSÃO: {VERSION}</div>
     </div>
   )
 }

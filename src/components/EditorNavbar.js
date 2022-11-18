@@ -1,23 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import Handlebars from 'handlebars'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { saveAs } from 'file-saver'
+import dayjs from 'dayjs'
+
+import { addPageProperty } from '@/actions/Page'
+import { addBlock, resetBlockTree } from '@/actions/BlockTree'
+import { addBlockCacheEntry } from '@/actions/BlockCache'
+import { load } from '@/actions/LoadedTree'
 
 import LogoFaculdades from '@/assets/svg/logo_faculdades.svg'
+
+import BtnCopiarWebP from '@/components/Btn/BtnCopiarWebP'
 
 import useFeather from '@/hooks/useFeather'
 
 import FaculdadesTemplate from '@/templates/FaculdadesTemplate'
 
 import Log from '@/utils/Log'
-import { addBlock } from '@/actions/BlockTree'
-import { addBlockCacheEntry } from '@/actions/BlockCache'
-import { load } from '@/actions/LoadedTree'
+
+import {
+  DND_EDITOR_BLOCK_MODAL_INSCRICAO
+} from '@/dndTypes'
 
 export default function EditorNavbar(props) {
   useFeather()
 
+  const page = useSelector(state => state.Page)
   const blockCache = useSelector(state => state.BlockCache)
   const blockTree = useSelector(state => state.BlockTree)
 
@@ -63,11 +72,19 @@ export default function EditorNavbar(props) {
       }
     }
 
+    Log.dev(obj)
+
     let type = obj.type
     let template = templates[type]
 
-    html = template({ content: html })      
+    if (html === '') {
+      let content = obj.content
+      html = template({ content: content })    
+    } else {
+      html = template({ content: html })    
+    }
 
+  
     return html
   }
 
@@ -79,7 +96,7 @@ export default function EditorNavbar(props) {
       arr.push({
         ...blockTree[id],
         id: id,
-        order: blockCache[id]
+        order: blockCache[id] || null
       })
     }
 
@@ -91,6 +108,7 @@ export default function EditorNavbar(props) {
   function copiarParaWebP() {
     let tree = generateTree()
     let html = gerarHtml(FaculdadesTemplate, tree)
+
     setHtml(html)
   }
 
@@ -98,6 +116,7 @@ export default function EditorNavbar(props) {
     let tree = generateTree()
 
     let json = JSON.stringify({
+      page: page,
       blockTree: blockTree,
       blockCache: blockCache,
       tree: tree,
@@ -107,7 +126,20 @@ export default function EditorNavbar(props) {
       type: 'application/json',
     })
 
-    saveAs(blob, 'teste.json')
+    let datahora = dayjs().format('DD-MM-YYYY-HH[h]mm')
+    let filename = `Sem nome - ${datahora}`
+    let tipoCurso = page.tipoCurso
+    let nomeCurso = page.nomeCurso
+
+    if (tipoCurso && nomeCurso) {
+      filename = `${tipoCurso} em ${nomeCurso} - ${datahora}`
+    } else if (page.tipoCurso) {
+      filename = `${tipoCurso} - ${datahora}`
+    } else if (page.nomeCurso) {
+      filename = `${nomeCurso} - ${datahora}`
+    }
+
+    saveAs(blob, filename)
   }
 
   function handleCarregarChange(event) {
@@ -120,21 +152,65 @@ export default function EditorNavbar(props) {
     reader.onload = (event) => {
       let json = event.target.result
       let obj = JSON.parse(json)
+      let page = obj.page
       let blockTree = obj.blockTree
       let blockCache = obj.blockCache
       let tree = obj.tree
       
-      let keys = Object.keys(blockTree)
-      for (let key of keys) {
-        dispatch(addBlock(key, blockTree[key]))
-      }
+      let keys = []
+
+      let hasModalInscricao = false
       
-      keys = Object.keys(blockCache)
-      for (let key of keys) {
-        dispatch(addBlockCacheEntry(key, blockCache[key]))
+      if (page) {
+        keys = Object.keys(page)
+        for (let key of keys) {
+          dispatch(addPageProperty(key, page[key]))
+        }
       }
 
-      dispatch(load(tree))
+      if (blockTree) {
+        keys = Object.keys(blockTree)
+
+        /*
+        for (let key of keys) {
+          let block = blockTree[key]
+          let type = block.type
+          
+          if (type === 'DND_EDITOR_BLOCK_MODAL_INSCRICAO') {
+            hasModalInscricao = true
+          }
+
+          Log.dev(block, type, hasModalInscricao)
+        }
+        
+        if (hasModalInscricao) {
+          dispatch(resetBlockTree())
+        }
+        */
+
+        for (let key of keys) {
+          let block = blockTree[key]
+          let type = block.type
+
+          switch (type) {
+            case DND_EDITOR_BLOCK_MODAL_INSCRICAO:
+              continue
+              break
+
+            default:
+              dispatch(addBlock(key, blockTree[key]))
+          }
+        }
+      }
+
+      if (blockCache) {
+        keys = Object.keys(blockCache)
+        for (let key of keys) {
+          dispatch(addBlockCacheEntry(key, blockCache[key]))
+        }
+      }
+
+      if (tree) dispatch(load(tree))
     }
 
     reader.readAsText(file)
@@ -168,14 +244,7 @@ export default function EditorNavbar(props) {
           </div>
           Salvar
         </button>
-        <CopyToClipboard text={html}>
-          <button className="btn btn--one" onClick={copiarParaWebP}>
-            <div className="btn__icon">
-              <i data-feather="copy"></i>
-            </div>
-            Copiar para o WebP
-          </button>
-        </CopyToClipboard>
+        <BtnCopiarWebP html={html}  onClick={copiarParaWebP}/>
       </div>
     </nav>
   )

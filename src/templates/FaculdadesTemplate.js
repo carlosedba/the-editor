@@ -84,4 +84,39 @@ export default {
       </div>
     </div>
   `),
+  
+  DND_EDITOR_BLOCK_MODAL_INSCRICAO: compile(`
+    <div class="multi-modal-container">
+      <div class="multi-modal-overlay"></div>
+
+      <div class="multi-modal f22-modal" data-name="Inscricao" data-status="closed">
+        <div class="svg svg--height multi-modal__close f22-modal__close">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+            <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25-6.2 6.25-14.4 9.35-22.6 9.35s-16.38-3.125-22.62-9.375L160 301.3 54.63 406.6C48.38 412.9 40.19 416 32 416s-16.37-3.1-22.625-9.4c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/>
+          </svg>
+        </div>
+        <div class="f22-modal__header">
+          <p class="f22-modal__hat">{{content.tipoCurso}} em {{content.nomeCurso}}</p>
+          <h1 class="f22-modal__title">Escolha sua forma de inscrição:</h1>
+        </div>
+        <div class="f22-modal__content">
+          {{#if content.linkInscricaoVestibularTradicional}}
+            <a class="f22-btn f22-btn--four" href="{{content.linkInscricaoVestibularTradicional}}" target="_blank">Inscrição para Vestibular Tradicional</a>
+          {{/if}}
+          {{#if content.linkInscricaoVestibularOnline}}
+            <a class="f22-btn f22-btn--four" href="{{content.linkInscricaoVestibularOnline}}" target="_blank">Inscrição para Vestibular Online</a>
+          {{/if}}
+          {{#if content.linkInscricaoBolsaEnem}}
+            <a class="f22-btn f22-btn--four" href="{{content.linkInscricaoBolsaEnem}}" target="_blank">Inscrição via Bolsa do ENEM</a>
+          {{/if}}
+          {{#if content.linkInscricaoTransferencia}}
+            <a class="f22-btn f22-btn--four" href="{{content.linkInscricaoTransferencia}}" target="_blank">Inscrição via Transferência</a>
+          {{/if}}
+          {{#if content.linkInscricaoPortadorDiploma}}
+            <a class="f22-btn f22-btn--four" href="{{content.linkInscricaoPortadorDiploma}}" target="_blank">Inscrição para Portador de Diploma</a>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  `),
 }

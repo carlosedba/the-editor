@@ -7,6 +7,7 @@ import {
   addBlock,
   updateBlock,
   deleteBlock,
+  resetBlockTree
 } from '@/actions/BlockTree'
 
 import {
@@ -65,7 +66,9 @@ export default function EditorContent(props) {
   useEffect(() => {
     if (loadedTree) {
       for (let block of loadedTree) {
-        _addBlock(block.type, block.id, block.children)
+        if (block.type.includes('DND_EDITOR_SIDEBAR_BLOCK')) {
+          _addBlock(block.type, block.id, block.children)
+        }
       }
     }
   }, [loadedTree])

@@ -23,3 +23,9 @@ export function deleteBlock(id) {
   }
 }
 
+export function resetBlockTree() { 
+  return {
+    type: types.RESET_BLOCK_TREE,
+  }
+}
+
