@@ -4,24 +4,27 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const svgoConfig = require('./svgoConfig')
 
-module.exports = function (env) {
+module.exports = function (env) { 
 	return {
-		target: 'web',
-
 		entry: {
-			app: './src/index.js'
+			editor: './src/index.js'
 		},
 
 		output: {
+			asyncChunks: true,
+			clean: true,
+			filename: '[name]-[contentHash].js',
 			path: path.resolve(__dirname, 'dist'),
-			filename: '[name].js',
-			publicPath: '/',
+			publicPath: 'auto',
 		},
+
+		
+		target: 'web',
 		
 		resolve: {
-			extensions: ['.js', '.json'],
 			alias: {
-				'@': path.resolve(__dirname, 'src')
+				'@': path.resolve(__dirname, 'src'),
+				handlebars: 'handlebars/dist/handlebars.min.js'
 			}
 		},
 

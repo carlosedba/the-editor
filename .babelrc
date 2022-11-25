@@ -17,8 +17,7 @@
     ["react-css-modules", {
       "generateScopedName": "[name]_[local]__[hash:base64:5]",
       "autoResolveMultipleImports": true
-    }],
-		"react-hot-loader/babel"
+    }]
   ],
 
 	"env": {

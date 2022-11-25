@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const MinifyPlugin = require("babel-minify-webpack-plugin")
 const CompressionPlugin = require('compression-webpack-plugin')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 
 const base = require('./webpack.config.base')
 

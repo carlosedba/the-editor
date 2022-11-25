@@ -9,31 +9,23 @@ module.exports = function (env) {
 
 		devtool: 'eval-cheap-module-source-map',
 
-		entry: [
-			'react-hot-loader/patch',
-			'webpack-dev-server/client?http://0.0.0.0:4000',
-			'webpack/hot/only-dev-server',
-			'./src/index.js'
-		],
-
 		devServer: {
-			hot: true,
-			contentBase: path.join(__dirname, 'dist'),
-			publicPath: '/',
-			compress: true,
-			port: 4000,
+			client: {
+				overlay: {
+					errors: true
+				},
+				progress: true
+			},
+			historyApiFallback: true,
 			host: '0.0.0.0',
-			historyApiFallback: true
+			hot: true,
+			port: 4000,
 		},
 
 		optimization: {
 			minimize: false,
 			moduleIds: 'named'
-		},
-
-		plugins: [
-			new webpack.HotModuleReplacementPlugin(),
-		]
+		}
 	})
 }
 
