@@ -1,13 +1,13 @@
 const path = require('path')
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const base = require('./webpack.config.base')
 
 module.exports = function (env) {
 	return merge(base(), {
 		mode: 'development',
 
-		devtool: 'cheap-module-eval-source-map',
+		devtool: 'eval-cheap-module-source-map',
 
 		entry: [
 			'react-hot-loader/patch',
@@ -28,12 +28,11 @@ module.exports = function (env) {
 
 		optimization: {
 			minimize: false,
+			moduleIds: 'named'
 		},
 
 		plugins: [
 			new webpack.HotModuleReplacementPlugin(),
-
-			new webpack.NamedModulesPlugin(),
 		]
 	})
 }
