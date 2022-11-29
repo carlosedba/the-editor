@@ -48,7 +48,7 @@ module.exports = function (env) {
 
 		plugins: [
 			new CompressionPlugin(),
-			new MiniCssExtractPlugin(),
+			//new MiniCssExtractPlugin(),
 		]
 	})
 }

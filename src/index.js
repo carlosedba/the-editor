@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import Modal from 'react-modal'
 import { DndProvider, useDrag } from 'react-dnd'
@@ -38,25 +39,16 @@ function setModal() {
 }
 
 function initReact() {
-  const render = Component => {
-    ReactDOM.render(
-      <Provider store={store}>
-        <DndProvider backend={HTML5Backend}>
-          <Component/>
-        </DndProvider>
-      </Provider>
-      , document.getElementById('root')
-    )
-  }
+  const container = document.getElementById('root')
+  const root = createRoot(container)
   
-  render(MainRouter)
-
-  // webpack Hot Module Replacement API
-  if (module.hot) {
-    module.hot.accept('./components/MainRouter', () => {
-      render(MainRouter)
-    })
-  }
+  root.render(
+    <Provider store={store}>
+      <DndProvider backend={HTML5Backend}>
+        <MainRouter/>
+      </DndProvider>
+    </Provider>
+  )
 }
 
 function main() {

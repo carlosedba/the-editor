@@ -15,6 +15,8 @@ import EditorSidebarBlock from '@/components/EditorSidebarBlock'
 import EditorSidebarTextInput from '@/components/EditorSidebarTextInput'
 import EditorContent from '@/components/EditorContent'
 
+import Log from '@/utils/Log'
+
 import { VERSION } from '@/globals'
 
 import {
@@ -63,10 +65,10 @@ export default function Editor(props) {
   }
 
   function atualizarModalInscricao(name, value) {
-    setContentModalInscricao({
+    setContentModalInscricao((contentModalInscricao) => ({
       ...contentModalInscricao,
       [name]: value
-    })
+    }))
   }
 
   return (
