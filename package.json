@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "prebuild": "",
-    "build": "webpack --env=prod --progress --profile --colors",
-    "build-dev": "webpack --env=dev --progress --profile --colors",
+    "build": "webpack --progress --env BUNDLE_NAME=editor --env PRODUCTION=true",
+    "build-dev": "webpack --progress --env BUNDLE_NAME=editor --env PRODUCTION=false",
     "dev": "webpack-dev-server --config webpack.config.dev.js"
   },
   "keywords": [],
@@ -23,6 +23,7 @@
     "css-loader": "^6.7.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.0",
     "redux-devtools-extension": "^2.13.9",
     "script-loader": "^0.7.2",
     "style-loader": "^3.3.1",

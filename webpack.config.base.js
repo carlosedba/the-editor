@@ -1,13 +1,14 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const svgoConfig = require('./svgoConfig')
 
-module.exports = function (env) { 
+module.exports = function ({ BUNDLE_NAME }) { 
 	return {
 		entry: {
-			editor: './src/index.js'
+			[BUNDLE_NAME]: './src/index.js'
 		},
 
 		output: {

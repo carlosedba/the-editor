@@ -1,13 +1,15 @@
 const path = require('path')
 const webpack = require('webpack')
-const MinifyPlugin = require("babel-minify-webpack-plugin")
-const CompressionPlugin = require('compression-webpack-plugin')
 const { merge } = require('webpack-merge')
+const CompressionPlugin = require('compression-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const base = require('./webpack.config.base')
 
 module.exports = function (env) {
-	return merge(base(), {
+	const { BUNDLE_NAME } = env
+
+	return merge(base(env), {
 		mode: 'production',
 
 		devtool: false,
@@ -22,19 +24,31 @@ module.exports = function (env) {
 
 			splitChunks: {
 				chunks: 'all',
-				maxInitialRequests: Infinity,
-				minSize: 0,
+				minSize: 20000,
+				minRemainingSize: 0,
+				minChunks: 1,
+				maxAsyncRequests: 30,
+				maxInitialRequests: 30,
+				enforceSizeThreshold: 50000,
 				cacheGroups: {
-					vendors: {
+					defaultVendors: {
 						test: /[\\/]node_modules[\\/]/,
-						name: 'vendors'
-					}
-				}
-			}
+						priority: -10,
+						reuseExistingChunk: true,
+						name: `${BUNDLE_NAME}-vendor`
+					},
+					default: {
+						minChunks: 2,
+						priority: -20,
+						reuseExistingChunk: true,
+					},
+				},
+			},
 		},
 
 		plugins: [
-			new CompressionPlugin()
+			new CompressionPlugin(),
+			new MiniCssExtractPlugin(),
 		]
 	})
 }

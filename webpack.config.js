@@ -1,4 +1,5 @@
 module.exports = function (env) {
-	return require(`./webpack.config.${env}`)({ env: env })
+	let file = (env.PRODUCTION) ? 'prod' : 'dev'
+	return require(`./webpack.config.${file}`)(env)
 }
 
