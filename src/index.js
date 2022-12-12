@@ -8,6 +8,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import * as dayjs from 'dayjs'
 import 'dayjs/locale/pt-br'
 
+import 'react-contexify/dist/ReactContexify.css'
+
 import './assets/css/inputs.scss'
 import './assets/css/fields.scss'
 import './assets/css/buttons.scss'

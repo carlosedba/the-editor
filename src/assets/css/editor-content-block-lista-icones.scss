@@ -67,8 +67,10 @@
   align-items: center;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
+.editor-content-block-lista-icones-item__icon-preview svg,
 .editor-content-block-lista-icones-item__icon-preview img {
   display: block;
   height: 60px;

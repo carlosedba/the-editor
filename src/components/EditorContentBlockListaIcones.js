@@ -1,5 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { nanoid } from 'nanoid'
+import { saveAs } from 'file-saver'
+import {
+  Menu,
+  Item,
+  Separator,
+  Submenu,
+  useContextMenu
+} from 'react-contexify'
 
 import {
   addBlock,
@@ -31,9 +40,15 @@ export default function EditorContentBlockListaIcones(props) {
     { icon: '', text: '' }
   ])
 
+  const [menuId, setMenuId] = useState(nanoid())
+
   const dispatch = useDispatch()
 
   const fileInputs = useRef([])
+
+  const { show } = useContextMenu({
+    id: menuId
+  })
 
   useEffect(() => {
     if (blockTree[id]) {
@@ -119,11 +134,27 @@ export default function EditorContentBlockListaIcones(props) {
     reader.readAsBinaryString(file)
   }
 
+  function showContextMenu(event, props) {
+    Log.dev(props)
+    //return show({ event: event, props: props.item })
+  }
+
+  function handleBaixarSvg({ event, props }) {
+    let icon = props.icon
+
+    let blob = new Blob([icon], {
+      type: 'image/svg+xml',
+    })
+
+    saveAs(blob, 'icone.svg')
+  }
+
   function renderItems() {
+    Log.dev('renderItems called!', content.length)
     return content.map((item, i) => {
       return (
-        <div className="editor-content-block-lista-icones-item" key={i}>
-          <div className="editor-content-block-lista-icones-item__icon">
+        <div className="editor-content-block-lista-icones-item" key={id}>
+          <div className="editor-content-block-lista-icones-item__icon" onContextMenu={(event) => show({ event: event, props: item })}>
             <input className="editor-content-block-lista-icones-item__icon-input" type="file" accept="image/svg+xml" onChange={(event) => handleItemIconChange(event, i)} ref={(el) => fileInputs.current[i] = el}/>
             <div className="editor-content-block-lista-icones-item__icon-preview" dangerouslySetInnerHTML={{ __html: item.icon }}></div>
           </div>
@@ -149,6 +180,10 @@ export default function EditorContentBlockListaIcones(props) {
         onMoveDown={onMoveDown}
         place="right"
       />
+
+      <Menu id={menuId}>
+        <Item onClick={handleBaixarSvg}>Baixar SVG</Item>
+      </Menu>
     </div>
   )
 }
