@@ -23,6 +23,7 @@ import {
   DND_EDITOR_SIDEBAR_BLOCK_SECAO,
   DND_EDITOR_SIDEBAR_BLOCK_TITULO,
   DND_EDITOR_SIDEBAR_BLOCK_TEXTO,
+  DND_EDITOR_SIDEBAR_BLOCK_TEXTO_LEX,
   DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES,
   DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES,
   DND_EDITOR_SIDEBAR_BLOCK_BOTAO,
@@ -85,6 +86,7 @@ export default function Editor(props) {
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_SECAO} icon="align-justify" name="Seção"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_TITULO} icon="type" name="Título"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_TEXTO} icon="edit-3" name="Texto"/>
+                <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_TEXTO_LEX} icon="type" name="Lexical"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES} icon="list" name="Lista com ícones"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES} icon="square" name="Blocos com ícones"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_BOTAO} icon="mouse-pointer" name="Botão"/>
