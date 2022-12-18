@@ -12,6 +12,10 @@ export default {
   DND_EDITOR_SIDEBAR_BLOCK_TEXTO: compile(`
     <div>{{content}}</div>
   `),
+
+  DND_EDITOR_SIDEBAR_BLOCK_TEXTO_LEX: compile(`
+    {{{content.html}}}
+  `),
   
   DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES: compile(`
     <ul class="f22-lista-icones">
@@ -117,6 +121,34 @@ export default {
           {{/if}}
         </div>
       </div>
+    </div>
+  `),
+  
+  DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_CAMPUS: compile(`
+    <div class="f22-e-mec">
+      <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/campus.png">
+      <p><b>Consulte aqui</b> o cadastro de nossa instituição no <b>Sistema e-MEC</b>.</p>
+    </div>
+  `),
+  
+  DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_CIC: compile(`
+    <div class="f22-e-mec">
+      <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/cic.png">
+      <p><b>Consulte aqui</b> o cadastro de nossa instituição no <b>Sistema e-MEC</b>.</p>
+    </div>
+  `),
+  
+  DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_SJP: compile(`
+    <div class="f22-e-mec">
+      <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/sjp.png">
+      <p><b>Consulte aqui</b> o cadastro de nossa instituição no <b>Sistema e-MEC</b>.</p>
+    </div>
+  `),
+  
+  DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_LONDRINA: compile(`
+    <div class="f22-e-mec">
+      <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/londrina.png">
+      <p><b>Consulte aqui</b> o cadastro de nossa instituição no <b>Sistema e-MEC</b>.</p>
     </div>
   `),
 }

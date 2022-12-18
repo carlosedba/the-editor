@@ -161,6 +161,9 @@ input[type=number] {
 }
 
 .editor-sidebar--left {
+    padding-bottom: 100px;
+    height: calc(100% - 100px);
+    overflow-y: scroll;
     border-right: 1px solid $colorBlack;
 }
 
@@ -445,6 +448,7 @@ input[type=number] {
     display: flex;
     flex-flow: column nowrap;
     height: 100vh;
+    overflow: hidden;
 }
 
 .editor__header {

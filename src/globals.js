@@ -1,3 +1,3 @@
 export const PRODUCTION = false
 export const BASEPATH = (PRODUCTION) ? 'editor' : ''
-export const VERSION = '1.2.0'
+export const VERSION = '1.4.0'
