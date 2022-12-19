@@ -23,6 +23,10 @@ import {
   DND_EDITOR_BLOCK_MODAL_INSCRICAO
 } from '@/dndTypes'
 
+import {
+  VERSION
+} from '@/globals'
+
 export default function EditorNavbar(props) {
   useFeather()
 
@@ -116,6 +120,7 @@ export default function EditorNavbar(props) {
     let tree = generateTree()
 
     let json = JSON.stringify({
+      version: VERSION,
       page: page,
       blockTree: blockTree,
       blockCache: blockCache,

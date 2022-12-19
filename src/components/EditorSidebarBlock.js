@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd'
 
 export default function EditorSidebarBlock(props) {
   const type = props.type
-  const icon = props.icon || 'box'
+  const Icon = props.icon || 'box'
   const name = props.name
 
   const [dragProps, drag] = useDrag(() => ({
@@ -25,7 +25,7 @@ export default function EditorSidebarBlock(props) {
   return (
     <div className="editor-sidebar-block" ref={drag}>
       <div className="editor-sidebar-block__icon">
-        <i data-feather={icon}></i>
+        {(typeof Icon === 'function') ? (<Icon/>) : (<i data-feather={Icon}></i>)}
       </div>
       {name}
     </div>

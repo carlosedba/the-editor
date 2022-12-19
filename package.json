@@ -34,6 +34,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@lexical/react": "^0.7.1",
     "await-to-js": "^3.0.0",
     "bluebird": "^3.7.2",
     "classnames": "^2.3.2",
@@ -43,6 +44,7 @@
     "framer-motion": "^7.6.7",
     "handlebars": "^4.7.7",
     "immutability-helper": "^3.1.1",
+    "lexical": "^0.7.1",
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
     "react-contexify": "^6.0.0",
@@ -61,6 +63,7 @@
     "redux-thunk": "^2.4.2",
     "reselect": "^4.1.7",
     "sass": "^1.56.1",
-    "sass-loader": "^13.2.0"
+    "sass-loader": "^13.2.0",
+    "verbum": "^0.4.1"
   }
 }

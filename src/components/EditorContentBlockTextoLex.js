@@ -1,5 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { $getRoot, $getSelection } from 'lexical'
+
+import { HeadingNode, QuoteNode } from '@lexical/rich-text'
+import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
+import { ListItemNode, ListNode } from '@lexical/list'
+import { CodeHighlightNode, CodeNode } from '@lexical/code'
+import { AutoLinkNode, LinkNode } from '@lexical/link'
+import { TRANSFORMERS } from '@lexical/markdown'
+import { $generateHtmlFromNodes } from '@lexical/html'
+
+import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
+import { ListPlugin } from '@lexical/react/LexicalListPlugin'
+import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin'
+import { LexicalComposer } from '@lexical/react/LexicalComposer'
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
+import { ContentEditable } from '@lexical/react/LexicalContentEditable'
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
+import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+
+import TreeViewPlugin from '@/plugins/TreeViewPlugin'
+import ToolbarPlugin from '@/plugins/ToolbarPlugin'
+import ListMaxIndentLevelPlugin from '@/plugins/ListMaxIndentLevelPlugin'
+import CodeHighlightPlugin from '@/plugins/CodeHighlightPlugin'
+import AutoLinkPlugin from '@/plugins/AutoLinkPlugin'
+import UpdateBlockPlugin from '@/plugins/UpdateBlockPlugin'
+
+import ExampleTheme from '@/themes/ExampleTheme'
 
 import {
   addBlock,
@@ -12,12 +42,16 @@ import useFeather from '@/hooks/useFeather'
 
 import Log from '@/utils/Log'
 
-import { DND_EDITOR_SIDEBAR_BLOCK_TEXTO } from '@/dndTypes'
+import { DND_EDITOR_SIDEBAR_BLOCK_TEXTO_LEX } from '@/dndTypes'
+
+function Placeholder() {
+  return <div className="editor-placeholder">Seu texto...</div>
+}
 
 export default function EditorContentBlockTextoLex(props) {
   useFeather()
 
-  const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_TEXTO
+  const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_TEXTO_LEX
 
   const id = props.id
   const parentId = props.parentId
@@ -27,7 +61,9 @@ export default function EditorContentBlockTextoLex(props) {
 
   const blockTree = useSelector(state => state.BlockTree)
 
-  const [content, setContent] = useState('')
+  const [content, setContent] = useState({
+    editorState: null, html: ''
+  })
 
   const dispatch = useDispatch()
 
@@ -44,21 +80,77 @@ export default function EditorContentBlockTextoLex(props) {
     }
   }, [])
 
-  function handleChange(event) {
-    const target = event.currentTarget
+  function handleLexicalChange(editorState, editor) {
+    editor.update(() => {
+      const root = $getRoot()
+      const selection = $getSelection()
+      const json = JSON.stringify(editorState)
+      const html = $generateHtmlFromNodes(editor, null)
 
-    let value = target.value
+      setContent((content) => {
+        let newContent = {
+          editorState: json,
+          html: html,
+        }
 
-    setContent(value)
+        dispatch(updateBlock(id, {
+          content: newContent
+        }))
 
-    dispatch(updateBlock(id, {
-      content: value
-    }))
+        return newContent
+      })
+    })
+  }
+
+  const editorConfig = {
+    // The editor theme
+    theme: ExampleTheme,
+    
+    // Handling of errors during update
+    onError(error) {
+      throw error
+    },
+  
+    // Any custom nodes go here
+    nodes: [
+      HeadingNode,
+      ListNode,
+      ListItemNode,
+      QuoteNode,
+      CodeNode,
+      CodeHighlightNode,
+      TableNode,
+      TableCellNode,
+      TableRowNode,
+      AutoLinkNode,
+      LinkNode
+    ]
   }
 
   return (
-    <div className="editor-content-block editor-content-block-texto" data-tip={DND_TYPE} data-for={DND_TYPE}>
-      <textarea placeholder="Texto..." value={content} onChange={handleChange}/>
+    <div className="editor-content-block editor-content-block-texto-lex" data-tip={DND_TYPE} data-for={DND_TYPE}>
+      <LexicalComposer initialConfig={editorConfig}>
+        <div className="editor-container">
+          <ToolbarPlugin />
+          <div className="editor-inner">
+            <RichTextPlugin
+              contentEditable={<ContentEditable className="editor-input" />}
+              placeholder={<Placeholder />}
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+            <HistoryPlugin />
+            <AutoFocusPlugin />
+            <CodeHighlightPlugin />
+            <ListPlugin />
+            <LinkPlugin />
+            <AutoLinkPlugin />
+            <ListMaxIndentLevelPlugin maxDepth={7} />
+            <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+            <OnChangePlugin onChange={handleLexicalChange} />
+            <UpdateBlockPlugin id={id} />
+          </div>
+        </div>
+      </LexicalComposer>
 
       <EditorContentBlockTooltip
         id={DND_TYPE}
@@ -69,4 +161,3 @@ export default function EditorContentBlockTextoLex(props) {
     </div>
   )
 }
-

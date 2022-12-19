@@ -68,20 +68,29 @@ module.exports = function ({ BUNDLE_NAME }) {
 					]
 				},
 				{
-					test: /\.svg$/,
-					use: { loader: '@svgr/webpack', options: { svgoConfig } }
+					test: /\.(png|jpg|jpeg|gif)?$/,
+					type: 'asset/resource',
 				},
 				{
-					test: /\.(png|jpg|jpeg|gif)?$/,
-					use: { loader: 'url-loader', options: { limit: 100000 } }
+					test: /\.svg?$/,
+					oneOf: [
+						{
+							test: /assets\/svg/,
+							use: { loader: '@svgr/webpack', options: { svgoConfig } }
+						},
+						{
+							test: /lexical/,
+							type: 'asset/resource',
+						},
+					]
 				},
 				{ 
 					test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-					use: { loader: 'url-loader', options: { limit: 100000, mimetype: 'application/font-woff' } }
+					type: 'asset/resource'
 				},
 				{ 
 					test: /\.(swoff|woff|woff2|eot|ttf|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-					loader: 'file-loader'
+					type: 'asset/resource'
 				}
 			]
 		},
