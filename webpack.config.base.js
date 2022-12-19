@@ -75,7 +75,7 @@ module.exports = function ({ BUNDLE_NAME }) {
 					test: /\.svg?$/,
 					oneOf: [
 						{
-							test: /assets\/svg/,
+							test: /assets(\/|\\)svg/,
 							use: { loader: '@svgr/webpack', options: { svgoConfig } }
 						},
 						{
