@@ -27,6 +27,7 @@ import {
   DND_EDITOR_SIDEBAR_BLOCK_TEXTO,
   DND_EDITOR_SIDEBAR_BLOCK_TEXTO_LEX,
   DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES,
+  DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES_LEX,
   DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES,
   DND_EDITOR_SIDEBAR_BLOCK_BOTAO,
   DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE,
@@ -94,13 +95,14 @@ export default function Editor(props) {
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_TEXTO} icon="edit-2" name="Texto simples"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_TEXTO_LEX} icon="edit-3" name="Texto"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES} icon="list" name="Lista com ícones"/>
+                <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES_LEX} icon="list" name="Lista com ícones - Lex"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES} icon="square" name="Blocos com ícones"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_BOTAO} icon="mouse-pointer" name="Botão"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE} icon="youtube" name="Vídeo do YouTube"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_BOX_DESCONTOS} icon="box" name="Box Descontos"/>
               </EditorSidebarBlocks>
             </EditorSidebarGroup>
-            <EditorSidebarGroup title="QR-CODES E-MEC">
+            <EditorSidebarGroup title="QR CODES E-MEC">
               <EditorSidebarBlocks>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_CAMPUS} icon={IcQrCode} name="Campus"/>
                 <EditorSidebarBlock type={DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_CIC} icon={IcQrCode} name="CIC"/>

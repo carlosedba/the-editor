@@ -3,6 +3,7 @@ import EditorContentBlockTitulo from '@/components/EditorContentBlockTitulo'
 import EditorContentBlockTexto from '@/components/EditorContentBlockTexto'
 import EditorContentBlockTextoLex from '@/components/EditorContentBlockTextoLex'
 import EditorContentBlockListaIcones from '@/components/EditorContentBlockListaIcones'
+import EditorContentBlockListaIconesLex from '@/components/EditorContentBlockListaIconesLex'
 import EditorContentBlockBlocosIcones from '@/components/EditorContentBlockBlocosIcones'
 import EditorContentBlockBotao from '@/components/EditorContentBlockBotao'
 import EditorContentBlockYouTube from '@/components/EditorContentBlockYouTube'
@@ -19,6 +20,7 @@ export default {
   DND_EDITOR_SIDEBAR_BLOCK_TEXTO: EditorContentBlockTexto,
   DND_EDITOR_SIDEBAR_BLOCK_TEXTO_LEX: EditorContentBlockTextoLex,
   DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES: EditorContentBlockListaIcones,
+  DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES_LEX: EditorContentBlockListaIconesLex,
   DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES: EditorContentBlockBlocosIcones,
   DND_EDITOR_SIDEBAR_BLOCK_BOTAO: EditorContentBlockBotao,
   DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE: EditorContentBlockYouTube,
