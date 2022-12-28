@@ -11,12 +11,7 @@ import {
   useContextMenu
 } from 'react-contexify'
 
-import { HeadingNode, QuoteNode } from '@lexical/rich-text'
-import { TableCellNode, TableNode, TableRowNode } from '@lexical/table'
-import { ListItemNode, ListNode } from '@lexical/list'
-import { CodeHighlightNode, CodeNode } from '@lexical/code'
 import { AutoLinkNode, LinkNode } from '@lexical/link'
-import { TRANSFORMERS } from '@lexical/markdown'
 import { $generateHtmlFromNodes } from '@lexical/html'
 
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
@@ -52,16 +47,16 @@ import useFeather from '@/hooks/useFeather'
 
 import Log from '@/utils/Log'
 
-import { DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES_LEX } from '@/dndTypes'
+import { DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES_LEX } from '@/dndTypes'
 
 function Placeholder() {
   return <div className="lexical-editor-placeholder">Seu texto...</div>
 }
 
-export default function EditorContentBlockListaIconesLex(props) {
+export default function EditorContentBlockBlocosIconesLex(props) {
   useFeather()
 
-  const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES_LEX
+  const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES_LEX
 
   const id = props.id
   const parentId = props.parentId
@@ -70,7 +65,7 @@ export default function EditorContentBlockListaIconesLex(props) {
   const onMoveDown = props.onMoveDown
 
   const blockTree = useSelector(state => state.BlockTree)
-
+  
   const [content, setContent] = useState([
     { icon: '', editorState: null, html: '' }
   ])
@@ -138,7 +133,7 @@ export default function EditorContentBlockListaIconesLex(props) {
             content: newContent
           }))
         }
-        
+
         return newContent
       })
     })
@@ -169,7 +164,7 @@ export default function EditorContentBlockListaIconesLex(props) {
         dispatch(updateBlock(id, {
           content: newContent
         }))
-
+        
         return newContent
       })
     }
@@ -190,10 +185,10 @@ export default function EditorContentBlockListaIconesLex(props) {
   function renderItems() {
     return content.map((item, i) => {
       return (
-        <div className="editor-content-block-lista-icones-lex-item" key={i}>
-          <div className="editor-content-block-lista-icones-lex-item__icon" onContextMenu={(event) => show({ event: event, props: item })}>
-            <input className="editor-content-block-lista-icones-lex-item__icon-input" type="file" accept="image/svg+xml" onChange={(event) => handleItemIconChange(event, i)} ref={(el) => fileInputs.current[i] = el}/>
-            <div className="editor-content-block-lista-icones-lex-item__icon-preview" dangerouslySetInnerHTML={{ __html: item.icon }}></div>
+        <div className="editor-content-block-blocos-icones-lex-item" key={i}>
+          <div className="editor-content-block-blocos-icones-lex-item__icon" onContextMenu={(event) => show({ event: event, props: item })}>
+            <input className="editor-content-block-blocos-icones-lex-item__icon-input" type="file" accept="image/svg+xml" onChange={(event) => handleItemIconChange(event, i)} ref={(el) => fileInputs.current[i] = el}/>
+            <div className="editor-content-block-blocos-icones-lex-item__icon-preview" dangerouslySetInnerHTML={{ __html: item.icon }}></div>
           </div>
           <LexicalComposer initialConfig={editorConfig}>
             <div className="lexical">
@@ -234,8 +229,8 @@ export default function EditorContentBlockListaIconesLex(props) {
   }
 
   return (
-    <div className="editor-content-block editor-content-block-lista-icones-lex" data-tip={DND_TYPE} data-for={DND_TYPE}>
-      <button className="editor-content-block-lista-icones-lex_add" onClick={handleAddItemClick}>
+    <div className="editor-content-block editor-content-block-blocos-icones-lex" data-tip={DND_TYPE} data-for={DND_TYPE}>
+      <button className="editor-content-block-blocos-icones-lex_add" onClick={handleAddItemClick}>
         <i data-feather="plus"></i>
         Adicionar item
       </button>
@@ -247,7 +242,7 @@ export default function EditorContentBlockListaIconesLex(props) {
         onDelete={onDelete}
         onMoveUp={onMoveUp}
         onMoveDown={onMoveDown}
-        place="right"
+        place="left"
       />
 
       <Menu id={menuId}>
@@ -256,3 +251,4 @@ export default function EditorContentBlockListaIconesLex(props) {
     </div>
   )
 }
+

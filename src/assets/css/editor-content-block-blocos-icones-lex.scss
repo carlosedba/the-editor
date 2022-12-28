@@ -1,16 +1,19 @@
 @import 'globals';
 
-.editor-content-block-lista-icones-lex {
+.editor-content-block-blocos-icones-lex {
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 520px;
   margin-left: 20px;
   margin-right: 20px;
   width: calc(100% - 40px);
 }
 
-.editor-content-block-lista-icones-lex ::placeholder {
+.editor-content-block-blocos-icones-lex ::placeholder {
   font-weight: 300;
 }
 
-.editor-content-block-lista-icones-lex_add {
+.editor-content-block-blocos-icones-lex_add {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -30,19 +33,29 @@
   font-weight: 500;
 }
 
-.editor-content-block-lista-icones-lex_add svg {
+.editor-content-block-blocos-icones-lex_add svg {
   display: block;
-  height: 19px;
+  padding: 10px 0;
+  height: 25px;
   margin-right: 5px;
 }
 
-.editor-content-block-lista-icones-lex-item {
+.editor-content-block-blocos-icones-lex-item {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
+  padding: 15px;
+  width: calc(250px - 30px);
+  height: calc(250px - 30px);
   margin-top: 15px;
+  border-radius: 4px;
+  border: 1px solid $colorBlack;
 }
 
-.editor-content-block-lista-icones-lex-item__icon {
+.editor-content-block-blocos-icones-lex-item:nth-child(even) {
+  margin-right: 15px;
+}
+
+.editor-content-block-blocos-icones-lex-item__icon {
   position: relative;
   flex-shrink: 0;
   width: 70px;
@@ -51,7 +64,7 @@
   border: 1px solid $colorBlack;
 }
 
-.editor-content-block-lista-icones-lex-item__icon-input {
+.editor-content-block-blocos-icones-lex-item__icon-input {
   position: absolute;
   top: 0;
   left: 0;
@@ -61,26 +74,25 @@
   cursor: pointer;
 }
 
-.editor-content-block-lista-icones-lex-item__icon-preview {
+.editor-content-block-blocos-icones-lex-item__icon-preview {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
-.editor-content-block-lista-icones-lex-item__icon-preview svg,
-.editor-content-block-lista-icones-lex-item__icon-preview img {
+.editor-content-block-blocos-icones-lex-item__icon-preview img {
   display: block;
   height: 60px;
 }
 
-.editor-content-block-lista-icones-lex-item__text-input {
+.editor-content-block-blocos-icones-lex-item__text-input {
   align-self: center;
   padding: 10px 0;
   width: 100%;
-  margin-left: 15px;
+  min-height: 110px;
+  margin-top: 10px;
   border: none;
   border-bottom: 1px solid $colorBlack;
   outline: none;
@@ -89,7 +101,7 @@
   font-size: 21px;
 }
 
-.editor-content-block-lista-icones-lex {
+.editor-content-block-blocos-icones-lex {
 
   /* lexical - início
   /* ******************************************** */
@@ -149,10 +161,9 @@
 
   .lexical-editor-input {
     position: relative;
-    padding: 10px 40px 0 0;
-    margin-left: 15px;
-    width: calc(100% - 50px);
-    height: 60px;
+    padding: 10px 0 0 0;
+    width: 100%;
+    height: 130px;
     resize: none;
     outline: 0;
     caret-color: #444;
@@ -174,7 +185,7 @@
     display: inline-block;
     position: absolute;
     top: 10px;
-    left: 15px;
+    left: 0;
     overflow: hidden;
     color: #999;
     font-size: 21px;
@@ -376,6 +387,7 @@
   /* ******************************************** */
 
   .lexical-side-toolbar-item {
+    display: none !important;
     border: 0;
     display: flex;
     background: none;
@@ -419,4 +431,3 @@
   /* lexical-side-toolbar-item - fim
   /* ******************************************** */
 }
-

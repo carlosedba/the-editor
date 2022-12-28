@@ -30,6 +30,19 @@ export default {
     </ul>
   `),
   
+  DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES_LEX: compile(`
+    <ul class="f22-lista-icones">
+      {{#each content}}
+        <li>
+          <div class="f22-lista-icones__icon">
+            {{{icon}}}
+          </div>
+          {{{html}}}
+        </li>
+      {{/each}}
+    </ul>
+  `),
+  
   DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES: compile(`
     <ul class="f22-blocos-destaque">
       {{#each content}}
@@ -39,6 +52,21 @@ export default {
           </div>
           <div>
             {{text}}
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  `),
+  
+  DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES_LEX: compile(`
+    <ul class="f22-blocos-destaque">
+      {{#each content}}
+        <li>
+          <div class="f22-blocos-destaque__icon">
+            {{{icon}}}
+          </div>
+          <div>
+            {{{html}}}
           </div>
         </li>
       {{/each}}
@@ -126,28 +154,36 @@ export default {
   
   DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_CAMPUS: compile(`
     <div class="f22-e-mec">
-      <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/campus.png">
+      <a href="https://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/MTQ3ODQ=" target="_blank">
+        <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/campus.png">
+      </a>
       <p><b>Consulte aqui</b> o cadastro de nossa instituição no <b>Sistema e-MEC</b>.</p>
     </div>
   `),
   
   DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_CIC: compile(`
     <div class="f22-e-mec">
-      <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/cic.png">
+      <a href="https://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/MTM2Nzc=" target="_blank">
+        <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/cic.png">
+      </a>
       <p><b>Consulte aqui</b> o cadastro de nossa instituição no <b>Sistema e-MEC</b>.</p>
     </div>
   `),
   
   DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_SJP: compile(`
     <div class="f22-e-mec">
-      <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/sjp.png">
+      <a href="https://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/MTQwMA==" target="_blank">
+        <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/sjp.png">
+      </a>
       <p><b>Consulte aqui</b> o cadastro de nossa instituição no <b>Sistema e-MEC</b>.</p>
     </div>
   `),
   
   DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_LONDRINA: compile(`
     <div class="f22-e-mec">
-      <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/londrina.png">
+      <a href="https://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/MTQ3ODY=" target="_blank">
+        <img src="https://www.faculdadesdaindustria.org.br/layout/img/qrcodes/londrina.png">
+      </a>
       <p><b>Consulte aqui</b> o cadastro de nossa instituição no <b>Sistema e-MEC</b>.</p>
     </div>
   `),

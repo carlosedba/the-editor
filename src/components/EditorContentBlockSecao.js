@@ -31,6 +31,7 @@ import {
   DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES,
   DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES_LEX,
   DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES,
+  DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES_LEX,
   DND_EDITOR_SIDEBAR_BLOCK_BOTAO,
   DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE,
   DND_EDITOR_SIDEBAR_BLOCK_BOX_CONHECER,
@@ -69,6 +70,7 @@ export default function EditorContentBlockSecao(props) {
         DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES,
         DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES_LEX,
         DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES,
+        DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES_LEX,
         DND_EDITOR_SIDEBAR_BLOCK_BOTAO,
         DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE,
         DND_EDITOR_SIDEBAR_BLOCK_BOX_CONHECER,
@@ -238,6 +240,7 @@ export default function EditorContentBlockSecao(props) {
     let parentId = id
 
     return blocks.map((block, i) => {
+      Log.dev(block.id)
       const { id, Component } = block
 
       return (

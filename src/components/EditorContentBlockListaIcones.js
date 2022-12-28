@@ -153,7 +153,7 @@ export default function EditorContentBlockListaIcones(props) {
     Log.dev('renderItems called!', content.length)
     return content.map((item, i) => {
       return (
-        <div className="editor-content-block-lista-icones-item" key={id}>
+        <div className="editor-content-block-lista-icones-item" key={i}>
           <div className="editor-content-block-lista-icones-item__icon" onContextMenu={(event) => show({ event: event, props: item })}>
             <input className="editor-content-block-lista-icones-item__icon-input" type="file" accept="image/svg+xml" onChange={(event) => handleItemIconChange(event, i)} ref={(el) => fileInputs.current[i] = el}/>
             <div className="editor-content-block-lista-icones-item__icon-preview" dangerouslySetInnerHTML={{ __html: item.icon }}></div>

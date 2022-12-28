@@ -7,7 +7,7 @@ module.exports = function (env) {
 	return merge(base(env), {
 		mode: 'development',
 
-		devtool: 'eval-cheap-module-source-map',
+		devtool: 'cheap-module-source-map',
 
 		devServer: {
 			client: {
