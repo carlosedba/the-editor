@@ -32,8 +32,8 @@
         <script src="https://unpkg.com/feather-icons"></script>
 
         <!-- Application Scripts -->
-        <script src="{site/url}vendors.1540d7a6b2de9a0209cb.js" charset="UTF-8"></script>
-        <script src="{site/url}app.588a5f9267d522a88218.js" charset="UTF-8"></script>
+        <script src="{site/url}editor-vendor.f5d1deaf03f3fc9408db.js" charset="UTF-8"></script>
+        <script src="{site/url}editor.69fa906528ada76b4a44.js" charset="UTF-8"></script>
 
         <script type="text/javascript" charset="UTF-8">
           window.webp = {

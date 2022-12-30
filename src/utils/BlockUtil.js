@@ -3,7 +3,7 @@ export function moveDown(arr, index) {
     let newIndex = index + 1
 
     if (newIndex < arr.length) {
-        console.log(arr, index, newIndex)
+        //console.log(arr, index, newIndex)
         let element = arr[index]
     
         newArr.splice(index, 1);
@@ -18,7 +18,7 @@ export function moveUp(arr, index) {
     let newIndex = index - 1
 
     if (newIndex >= 0) {
-        console.log(arr, index, newIndex)
+        //console.log(arr, index, newIndex)
         let element = arr[index]
     
         newArr.splice(index, 1);

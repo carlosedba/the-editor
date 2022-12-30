@@ -6,12 +6,16 @@ import {
 
 import Inicio from '@/pages/Inicio'
 
+import { BASEPATH } from '@/globals'
+
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Inicio/>
   }
-])
+], {
+  basename: BASEPATH
+})
 
 export default function Main(props) {
   return (
