@@ -4,6 +4,6 @@ I created The Editor as an experiment of a drag-and-drop page editor. It was des
 
 The content inserted into the blocks is stored as an object and rendered to HTML using Handlebars templates that match the block identifier. Rich text is supported through Facebook's Lexical framework.
 
-Later, the Editor was integrated and further developed on another platform that I created.
+Later, The Editor was integrated and further developed on another platform that I created.
 
 ![the-editor-animated-gif-maker](https://github.com/CarlosEDBA/the-editor/assets/6378961/bfbd770e-7880-4980-9022-d9e49c3088d7)
