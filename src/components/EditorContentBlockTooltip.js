@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import ReactTooltip from 'react-tooltip'
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 import useFeather from '@/hooks/useFeather'
 
 import Log from '@/utils/Log'
+import { func } from 'prop-types'
 
 export default function EditorContentBlockTooltip(props) {
   useFeather()
@@ -26,6 +27,10 @@ export default function EditorContentBlockTooltip(props) {
     if (onMoveDown) onMoveDown()
   }
 
+  function onAfterShow() {
+    window.feather.replace()
+  }
+
   return (
     <ReactTooltip 
       id={id}
@@ -33,10 +38,14 @@ export default function EditorContentBlockTooltip(props) {
       delayUpdate={500}
       delayHide={500}
       place={place}
-      effect="solid"
+      effect="float"
       type="light"
       padding="0"
-      border={true}
+      border="1px solid #000"
+      opacity="1"
+      clickable={true}
+      afterShow={onAfterShow}
+      style={{ backgroundColor: '#fff', zIndex: 1000 }}
       className="editor-content-block-tooltip"
     >
       <header className="editor-content-block-tooltip__header">

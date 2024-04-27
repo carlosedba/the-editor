@@ -7,6 +7,7 @@
 .editor-content-block-tooltip__header {
     display: flex;
     flex-flow: row nowrap;
+    z-index: 1;
 }
 
 .editor-content-block-tooltip__action {
@@ -29,6 +30,7 @@
     flex-shrink: 0;
     height: 15px;
     transition: all 160ms ease;
+    fill: #000;
 }
 
 .editor-content-block-tooltip__action:focus svg,

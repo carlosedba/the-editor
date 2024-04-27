@@ -6,7 +6,7 @@ import {
 
 import Inicio from '@/pages/Inicio'
 
-import { BASEPATH } from '@/globals'
+import { BASEPATH } from '@/constants'
 
 const router = createBrowserRouter([
   {

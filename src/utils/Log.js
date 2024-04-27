@@ -1,4 +1,4 @@
-import { PRODUCTION } from '@/globals'
+import { PRODUCTION } from '@/constants'
 
 const Log = {
   dev: function () {

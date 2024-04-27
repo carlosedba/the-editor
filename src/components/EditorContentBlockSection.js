@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { useDrop } from 'react-dnd'
 import { nanoid } from 'nanoid'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
   addBlock,
   updateBlock,
   deleteBlock,
-  resetBlockTree
 } from '@/actions/BlockTree'
 
 import {
@@ -16,7 +15,7 @@ import {
   deleteBlockCacheEntry,
 } from '@/actions/BlockCache'
 
-import EditorContentBlockSecao from '@/components/EditorContentBlockSection'
+import useFeather from '@/hooks/useFeather'
 
 import Log from '@/utils/Log'
 
@@ -28,23 +27,47 @@ import {
   DND_EDITOR_SIDEBAR_BLOCK_SECTION,
   DND_EDITOR_SIDEBAR_BLOCK_TITLE,
   DND_EDITOR_SIDEBAR_BLOCK_TEXT,
+  DND_EDITOR_SIDEBAR_BLOCK_RICH_TEXT,
   DND_EDITOR_SIDEBAR_BLOCK_ICON_LIST,
+  DND_EDITOR_SIDEBAR_BLOCK_RICH_ICON_LIST,
   DND_EDITOR_SIDEBAR_BLOCK_SQUARE_CARD,
+  DND_EDITOR_SIDEBAR_BLOCK_RICH_SQUARE_CARD,
   DND_EDITOR_SIDEBAR_BLOCK_BUTTON,
+  DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE,
 } from '@/dndTypes'
 
-export default function EditorContent(props) {
-  const blockTree = useSelector(state => state.BlockCache)
+export default function EditorContentBlockSection(props) {
+  useFeather()
+
+  const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_SECTION
+
+  const id = props.id
+  const children = props.children
+  const onDelete = props.onDelete
+  const onMoveUp = props.onMoveUp
+  const onMoveDown = props.onMoveDown
+
+  const blockTree = useSelector(state => state.BlockTree)
   const blockCache = useSelector(state => state.BlockCache)
   const loadedTree = useSelector(state => state.LoadedTree)
 
   const [blocks, setBlocks] = useState([])
 
   const dispatch = useDispatch()
-
+  
   const [collectedProps, drop] = useDrop(
     () => ({
-      accept: DND_EDITOR_SIDEBAR_BLOCK_SECTION,
+      accept: [
+        DND_EDITOR_SIDEBAR_BLOCK_TITLE,
+        DND_EDITOR_SIDEBAR_BLOCK_TEXT,
+        DND_EDITOR_SIDEBAR_BLOCK_RICH_TEXT,
+        DND_EDITOR_SIDEBAR_BLOCK_ICON_LIST,
+        DND_EDITOR_SIDEBAR_BLOCK_RICH_ICON_LIST,
+        DND_EDITOR_SIDEBAR_BLOCK_SQUARE_CARD,
+        DND_EDITOR_SIDEBAR_BLOCK_RICH_SQUARE_CARD,
+        DND_EDITOR_SIDEBAR_BLOCK_BUTTON,
+        DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE,
+      ],
 
       collect(monitor) {
         return {
@@ -62,16 +85,22 @@ export default function EditorContent(props) {
   )
 
   useEffect(() => {
-    if (loadedTree) {
-      for (let block of loadedTree) {
-        if (block.type.includes('DND_EDITOR_SIDEBAR_BLOCK')) {
-          _addBlock(block.type, block.id, block.children)
-        }
+    if (!blockTree[id]) {
+      dispatch(addBlock(id, {
+        type: DND_TYPE,
+      }))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (children) {
+      for (let block of children) {
+        _addBlock(block.type, block.id)
       }
     }
-  }, [loadedTree])
+  }, [children])
 
-  function _addBlock(type, id, children) {
+  function _addBlock(type, id) {
     const Component = contentBlocks[type]
     if (!id) id = nanoid()
 
@@ -82,18 +111,12 @@ export default function EditorContent(props) {
 
       dispatch(addBlockCacheEntry(id, projectedIndex))
 
-      let obj = {
-        id: id,
-        Component: Component,
-      }
-
-      if (children) {
-        obj.children = children
-      }
-
       let newArr = [
         ...blocks,
-        obj
+        {
+          id: id,
+          Component: Component
+        }
       ]
 
       return newArr
@@ -189,14 +212,29 @@ export default function EditorContent(props) {
     _deleteBlock(id)
   }
 
+  function handleDelete(event) {
+    if (onDelete) onDelete()
+  }
+  
+  function handleMoveUp(event) {
+    if (onMoveUp) onMoveUp()
+  }
+
+  function handleMoveDown(event) {
+    if (onMoveDown) onMoveDown()
+  }
+
   function renderBlocks() {
+    let parentId = id
+
     return blocks.map((block, i) => {
-      const { id, Component, children } = block
+      Log.dev(block.id)
+      const { id, Component } = block
 
       return (
         <Component
           id={id}
-          children={children}
+          parentId={parentId}
           onDelete={() => handleContentBlockDelete(id)}
           onMoveUp={() => handleContentBlockMoveUp(id)}
           onMoveDown={() => handleContentBlockMoveDown(id)}
@@ -207,7 +245,21 @@ export default function EditorContent(props) {
   }
 
   return (
-    <div className="editor-content" ref={drop}>
+    <div className="editor-content-block editor-content-block-section" ref={drop}>
+      <header className="editor-content-block-header">
+        <i data-feather="align-justify"></i>
+        Seção
+      </header>
+
+      <div className="editor-content-block-controller">
+        <button onClick={handleMoveUp}><i data-feather="chevron-up"></i></button>
+        <button onClick={handleMoveDown}><i data-feather="chevron-down"></i></button>
+      </div>
+
+      <button className="editor-content-block-remove" onClick={handleDelete}>
+        <i data-feather="x"></i>
+      </button>
+
       {renderBlocks()}
     </div>
   )

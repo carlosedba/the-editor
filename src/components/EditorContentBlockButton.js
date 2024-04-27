@@ -13,12 +13,12 @@ import useFeather from '@/hooks/useFeather'
 
 import Log from '@/utils/Log'
 
-import { DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE } from '@/dndTypes'
+import { DND_EDITOR_SIDEBAR_BLOCK_BUTTON } from '@/dndTypes'
 
-export default function EditorContentBlockYouTube(props) {
+export default function EditorContentBlockButton(props) {
   useFeather()
 
-  const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE
+  const DND_TYPE = DND_EDITOR_SIDEBAR_BLOCK_BUTTON
 
   const id = props.id
   const parentId = props.parentId
@@ -29,7 +29,7 @@ export default function EditorContentBlockYouTube(props) {
   const blockTree = useSelector(state => state.BlockTree)
 
   const [content, setContent] = useState({
-    url: '', videoId: ''
+    name: '', url: ''
   })
 
   const dispatch = useDispatch()
@@ -47,20 +47,30 @@ export default function EditorContentBlockYouTube(props) {
     }
   }, [])
 
-  function handleUrlChange(event) {
+  function handleNameChange(event) {
     const target = event.currentTarget
 
     let value = target.value
 
-    // https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
-    let youtubeRegex = /(https?:\/\/)?(((m|www)\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i
-    let videoId = value.match(youtubeRegex)[8] || ''
-
     setContent((content) => {
       let newContent = {
         ...content,
-        url: value,
-        videoId: videoId,
+        name: value
+      }
+
+      dispatch(updateBlock(id, {
+        content: newContent
+      }))
+
+      return newContent
+    })
+  }
+
+  function handleUrlChange(value) {
+    setContent((content) => {
+      let newContent = {
+        ...content,
+        url: value
       }
 
       dispatch(updateBlock(id, {
@@ -72,16 +82,9 @@ export default function EditorContentBlockYouTube(props) {
   }
 
   return (
-    <div className="editor-content-block editor-content-block-youtube" data-tooltip-id={DND_TYPE}>
-      <div className="editor-content-block-youtube__header">
-        <div className="editor-content-block-youtube__icon">
-          <i data-feather="youtube"></i>
-        </div>
-        <h1 className="editor-content-block-youtube__name">YouTube Video</h1>
-      </div>
-      <div className="editor-content-block-youtube__input">
-        <label>Video URL</label>
-        <input placeholder="" value={content.url} onChange={handleUrlChange}/>
+    <div className="editor-content-block editor-content-block-button" data-tooltip-id={DND_TYPE}>
+      <div className="editor-content-block-button__btn">
+        <input placeholder="Botão" value={content.name} onChange={handleNameChange}/>
       </div>
       
       <EditorContentBlockTooltip
@@ -89,7 +92,9 @@ export default function EditorContentBlockYouTube(props) {
         onDelete={onDelete}
         onMoveUp={onMoveUp}
         onMoveDown={onMoveDown}
+        place="right"
       >
+        <EditorContentBlockTooltipInput initialValue={content.url} label="URL" onChange={handleUrlChange}/>
       </EditorContentBlockTooltip>
     </div>
   )

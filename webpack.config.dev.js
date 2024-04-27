@@ -19,7 +19,7 @@ module.exports = function (env) {
 			historyApiFallback: true,
 			host: '0.0.0.0',
 			hot: true,
-			port: 4000,
+			port: 4001,
 		},
 
 		optimization: {

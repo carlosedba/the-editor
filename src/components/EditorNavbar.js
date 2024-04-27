@@ -9,23 +9,17 @@ import { addBlock, resetBlockTree } from '@/actions/BlockTree'
 import { addBlockCacheEntry } from '@/actions/BlockCache'
 import { load } from '@/actions/LoadedTree'
 
-import LogoFaculdades from '@/assets/svg/logo_faculdades.svg'
-
-import BtnCopiarWebP from '@/components/Btn/BtnCopiarWebP'
+import BtnCopyHtml from '@/components/Btn/BtnCopyHtml'
 
 import useFeather from '@/hooks/useFeather'
 
-import FaculdadesTemplate from '@/templates/FaculdadesTemplate'
+import DefaultTemplate from '@/templates/DefaultTemplate'
 
 import Log from '@/utils/Log'
 
 import {
-  DND_EDITOR_BLOCK_MODAL_INSCRICAO
-} from '@/dndTypes'
-
-import {
   VERSION
-} from '@/globals'
+} from '@/constants'
 
 export default function EditorNavbar(props) {
   useFeather()
@@ -109,9 +103,9 @@ export default function EditorNavbar(props) {
     return tree
   }
 
-  function copiarParaWebP() {
+  function copyHtml() {
     let tree = generateTree()
-    let html = gerarHtml(FaculdadesTemplate, tree)
+    let html = gerarHtml(DefaultTemplate, tree)
 
     setHtml(html)
   }
@@ -163,48 +157,11 @@ export default function EditorNavbar(props) {
       let tree = obj.tree
       
       let keys = []
-
-      let hasModalInscricao = false
       
       if (page) {
         keys = Object.keys(page)
         for (let key of keys) {
           dispatch(addPageProperty(key, page[key]))
-        }
-      }
-
-      if (blockTree) {
-        keys = Object.keys(blockTree)
-
-        /*
-        for (let key of keys) {
-          let block = blockTree[key]
-          let type = block.type
-          
-          if (type === 'DND_EDITOR_BLOCK_MODAL_INSCRICAO') {
-            hasModalInscricao = true
-          }
-
-          Log.dev(block, type, hasModalInscricao)
-        }
-        
-        if (hasModalInscricao) {
-          dispatch(resetBlockTree())
-        }
-        */
-
-        for (let key of keys) {
-          let block = blockTree[key]
-          let type = block.type
-
-          switch (type) {
-            case DND_EDITOR_BLOCK_MODAL_INSCRICAO:
-              continue
-              break
-
-            default:
-              dispatch(addBlock(key, blockTree[key]))
-          }
         }
       }
 
@@ -228,11 +185,11 @@ export default function EditorNavbar(props) {
           <i data-feather="edit"></i>
         </div> 
         <div className="editor-navbar__logo">
-          <LogoFaculdades/>
+          
         </div>
         <div className="editor-navbar__site">
-          <p className="editor-navbar__label">Site</p>
-          <p className="editor-navbar__value">Faculdades da Indústria</p>
+          <p className="editor-navbar__label">Page</p>
+          <p className="editor-navbar__value">Lorem Ipsum</p>
         </div>
       </div>
       <div className="editor-navbar__right">
@@ -240,16 +197,16 @@ export default function EditorNavbar(props) {
           <div className="btn__icon">
             <i data-feather="upload"></i>
           </div>
-          Carregar
+          Load
           <input type="file" accept="application/json" onChange={handleCarregarChange} ref={carregarInput}/>
         </button>
         <button className="btn btn--one" onClick={salvar}>
           <div className="btn__icon">
             <i data-feather="save"></i>
           </div>
-          Salvar
+          Save
         </button>
-        <BtnCopiarWebP html={html}  onClick={copiarParaWebP}/>
+        <BtnCopyHtml html={html} onClick={copyHtml}/>
       </div>
     </nav>
   )

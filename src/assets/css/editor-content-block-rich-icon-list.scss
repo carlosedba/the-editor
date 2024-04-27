@@ -1,0 +1,422 @@
+@import 'globals';
+
+.editor-content-block-rich-icon-list {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: calc(100% - 40px);
+}
+
+.editor-content-block-rich-icon-list ::placeholder {
+  font-weight: 300;
+}
+
+.editor-content-block-rich-icon-list_add {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  position: relative;
+  padding: 0 10px;
+  width: 100%;
+  height: 50px;
+  border-radius: 4px;
+  border: 1px solid $colorBlack;
+
+  cursor: pointer;
+
+  background-color: transparent;
+
+  font-family: 'serenity', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.editor-content-block-rich-icon-list_add svg {
+  display: block;
+  height: 19px;
+  margin-right: 5px;
+}
+
+.editor-content-block-rich-icon-list-item {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-top: 15px;
+}
+
+.editor-content-block-rich-icon-list-item__icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 4px;
+  border: 1px solid $colorBlack;
+}
+
+.editor-content-block-rich-icon-list-item__icon-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.editor-content-block-rich-icon-list-item__icon-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.editor-content-block-rich-icon-list-item__icon-preview svg,
+.editor-content-block-rich-icon-list-item__icon-preview img {
+  display: block;
+  height: 60px;
+}
+
+.editor-content-block-rich-icon-list-item__text-input {
+  align-self: center;
+  padding: 10px 0;
+  width: 100%;
+  margin-left: 15px;
+  border: none;
+  border-bottom: 1px solid $colorBlack;
+  outline: none;
+  color: $colorJet;
+  font-family: 'serenity', sans-serif;
+  font-size: 21px;
+}
+
+.editor-content-block-rich-icon-list {
+
+  /* lexical - início
+  /* ******************************************** */
+
+  .lexical {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    position: relative;
+    width: 100%;
+  }
+
+  .lexical i.link {
+    background-image: url('@/assets/lexical/icons/link.svg');
+  }
+
+  /* lexical - fim
+  /* ******************************************** */
+
+
+  /* lexical-ltr - início
+  /* ******************************************** */
+
+  .lexical-ltr {
+    text-align: left;
+  }
+
+  /* lexical-ltr - fim
+  /* ******************************************** */
+
+
+  /* lexical-rtl - início
+  /* ******************************************** */
+
+  .lexical-rtl {
+    text-align: right;
+  }
+
+  /* lexical-rtl - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-container - início
+  /* ******************************************** */
+
+  .lexical-editor-container {
+    position: relative;
+    width: 100%;
+  }
+
+  /* lexical-editor-container - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-input - início
+  /* ******************************************** */
+
+  .lexical-editor-input {
+    position: relative;
+    padding: 10px 40px 0 0;
+    margin-left: 15px;
+    width: calc(100% - 50px);
+    height: 60px;
+    resize: none;
+    outline: 0;
+    caret-color: #444;
+    font-size: 21px;
+    line-height: 28px;
+    overflow-y: scroll;
+    tab-size: 1;
+    border-bottom: 1px solid $colorBlack;
+  }
+
+  /* lexical-editor-input - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-placeholder - início
+  /* ******************************************** */
+
+  .lexical-editor-placeholder {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    overflow: hidden;
+    color: #999;
+    font-size: 21px;
+    line-height: 28px;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* lexical-editor-placeholder - fim
+  /* ******************************************** */
+
+  
+  /* lexical-editor-text-bold - início
+  /* ******************************************** */
+
+  .lexical-editor-text-bold {
+    font-weight: bold;
+  }
+
+  /* lexical-editor-text-bold - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-placeholder - início
+  /* ******************************************** */
+
+  .lexical-editor-placeholder {
+    font-style: normal;
+  }
+
+  /* lexical-editor-placeholder - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-text-underline - início
+  /* ******************************************** */
+
+  .lexical-editor-text-underline {
+    text-decoration: underline;
+  }
+
+  /* lexical-editor-text-underline - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-text-strikethrough - início
+  /* ******************************************** */
+
+  .lexical-editor-text-strikethrough {
+    text-decoration: line-through;
+  }
+
+  /* lexical-editor-text-strikethrough - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-text-underlineStrikethrough - início
+  /* ******************************************** */
+
+  .lexical-editor-text-underlineStrikethrough {
+    text-decoration: underline line-through;
+  }
+
+  /* lexical-editor-text-underlineStrikethrough - fim
+  /* ******************************************** */
+  
+
+  /* lexical-editor-link - início
+  /* ******************************************** */
+
+  .lexical-editor-link {
+    color: rgb(33, 111, 219);
+    text-decoration: none;
+  }
+
+  /* lexical-editor-link - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-tokenComment - início
+  /* ******************************************** */
+
+  .lexical-editor-tokenComment {
+    color: slategray;
+  }
+  
+  /* lexical-editor-tokenComment - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-tokenPunctuation - início
+  /* ******************************************** */
+
+  .lexical-editor-tokenPunctuation {
+    color: #999;
+  }
+  
+  /* lexical-editor-tokenPunctuation - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-tokenProperty - início
+  /* ******************************************** */
+
+  .lexical-editor-tokenProperty {
+    color: #905;
+  }
+  
+  /* lexical-editor-tokenProperty - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-tokenSelector - início
+  /* ******************************************** */
+
+  .lexical-editor-tokenSelector {
+    color: #690;
+  }
+
+  /* lexical-editor-tokenSelector - fim
+  /* ******************************************** */
+  
+
+  /* lexical-editor-tokenOperator - início
+  /* ******************************************** */
+
+  .lexical-editor-tokenOperator {
+    color: #9a6e3a;
+  }
+
+  /* lexical-editor-tokenOperator - fim
+  /* ******************************************** */
+  
+
+  /* lexical-editor-tokenAttr - início
+  /* ******************************************** */
+
+  .lexical-editor-tokenAttr {
+    color: #07a;
+  }
+
+  /* lexical-editor-tokenAttr - fim
+  /* ******************************************** */
+  
+
+  /* lexical-editor-tokenVariable - início
+  /* ******************************************** */
+
+  .lexical-editor-tokenVariable {
+    color: #e90;
+  }
+
+  /* lexical-editor-tokenVariable - fim
+  /* ******************************************** */
+  
+
+  /* lexical-editor-tokenFunction - início
+  /* ******************************************** */
+
+  .lexical-editor-tokenFunction {
+    color: #dd4a68;
+  }
+
+  /* lexical-editor-tokenFunction - fim
+  /* ******************************************** */
+
+
+  /* lexical-editor-paragraph - início
+  /* ******************************************** */
+
+  .lexical-editor-paragraph {
+    margin: 0;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .lexical-editor-paragraph:last-child {
+    margin-bottom: 0;
+  }
+
+  /* lexical-editor-paragraph - fim
+  /* ******************************************** */
+
+
+  /* lexical-side-toolbar - início
+  /* ******************************************** */
+
+  .lexical-side-toolbar {
+    position: absolute;
+    right: 0;
+  }
+
+  /* lexical-side-toolbar - fim
+  /* ******************************************** */
+
+
+  /* lexical-side-toolbar-item - início
+  /* ******************************************** */
+
+  .lexical-side-toolbar-item {
+    border: 0;
+    display: flex;
+    background: none;
+    border-radius: 10px;
+    padding: 8px;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+
+  .lexical-side-toolbar-item:disabled {
+    cursor: not-allowed;
+  }
+
+  .lexical-side-toolbar-item i.format {
+    background-size: contain;
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    margin-top: 2px;
+    vertical-align: -0.25em;
+    display: flex;
+    opacity: 0.6;
+  }
+
+  .lexical-side-toolbar-item:disabled i.format {
+    opacity: 0.2;
+  }
+
+  .lexical-side-toolbar-item.active {
+    background-color: rgba(223, 232, 250, 0.3);
+  }
+
+  .lexical-side-toolbar-item.active i {
+    opacity: 1;
+  }
+
+  .lexical-side-toolbar-item:hover:not([disabled]) {
+    background-color: #eee;
+  }
+
+  /* lexical-side-toolbar-item - fim
+  /* ******************************************** */
+}
+

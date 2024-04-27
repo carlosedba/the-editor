@@ -1,35 +1,23 @@
-import EditorContentBlockSecao from '@/components/EditorContentBlockSecao'
-import EditorContentBlockTitulo from '@/components/EditorContentBlockTitulo'
-import EditorContentBlockTexto from '@/components/EditorContentBlockTexto'
-import EditorContentBlockTextoLex from '@/components/EditorContentBlockTextoLex'
-import EditorContentBlockListaIcones from '@/components/EditorContentBlockListaIcones'
-import EditorContentBlockListaIconesLex from '@/components/EditorContentBlockListaIconesLex'
-import EditorContentBlockBlocosIcones from '@/components/EditorContentBlockBlocosIcones'
-import EditorContentBlockBlocosIconesLex from '@/components/EditorContentBlockBlocosIconesLex'
-import EditorContentBlockBotao from '@/components/EditorContentBlockBotao'
+import EditorContentBlockSection from '@/components/EditorContentBlockSection'
+import EditorContentBlockTitle from '@/components/EditorContentBlockTitle'
+import EditorContentBlockText from '@/components/EditorContentBlockText'
+import EditorContentBlockRichText from '@/components/EditorContentBlockRichText'
+import EditorContentBlockIconList from '@/components/EditorContentBlockIconList'
+import EditorContentBlockRichIconList from '@/components/EditorContentBlockRichIconList'
+import EditorContentBlockSquareCard from '@/components/EditorContentBlockSquareCard'
+import EditorContentBlockRichSquareCard from '@/components/EditorContentBlockRichSquareCard'
+import EditorContentBlockButton from '@/components/EditorContentBlockButton'
 import EditorContentBlockYouTube from '@/components/EditorContentBlockYouTube'
-import EditorContentBlockBoxConhecer from '@/components/EditorContentBlockBoxConhecer'
-import EditorContentBlockBoxDescontos from '@/components/EditorContentBlockBoxDescontos'
-import EditorContentBlockQrCodeCampus from '@/components/EditorContentBlockQrCodeCampus'
-import EditorContentBlockQrCodeCic from '@/components/EditorContentBlockQrCodeCic'
-import EditorContentBlockQrCodeSjp from '@/components/EditorContentBlockQrCodeSjp'
-import EditorContentBlockQrCodeLondrina from '@/components/EditorContentBlockQrCodeLondrina'
 
 export default {
-  DND_EDITOR_SIDEBAR_BLOCK_SECAO: EditorContentBlockSecao,
-  DND_EDITOR_SIDEBAR_BLOCK_TITULO: EditorContentBlockTitulo,
-  DND_EDITOR_SIDEBAR_BLOCK_TEXTO: EditorContentBlockTexto,
-  DND_EDITOR_SIDEBAR_BLOCK_TEXTO_LEX: EditorContentBlockTextoLex,
-  DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES: EditorContentBlockListaIcones,
-  DND_EDITOR_SIDEBAR_BLOCK_LISTA_ICONES_LEX: EditorContentBlockListaIconesLex,
-  DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES: EditorContentBlockBlocosIcones,
-  DND_EDITOR_SIDEBAR_BLOCK_BLOCOS_ICONES_LEX: EditorContentBlockBlocosIconesLex,
-  DND_EDITOR_SIDEBAR_BLOCK_BOTAO: EditorContentBlockBotao,
+  DND_EDITOR_SIDEBAR_BLOCK_SECTION: EditorContentBlockSection,
+  DND_EDITOR_SIDEBAR_BLOCK_TITLE: EditorContentBlockTitle,
+  DND_EDITOR_SIDEBAR_BLOCK_TEXT: EditorContentBlockText,
+  DND_EDITOR_SIDEBAR_BLOCK_RICH_TEXT: EditorContentBlockRichText,
+  DND_EDITOR_SIDEBAR_BLOCK_ICON_LIST: EditorContentBlockIconList,
+  DND_EDITOR_SIDEBAR_BLOCK_RICH_ICON_LIST: EditorContentBlockRichIconList,
+  DND_EDITOR_SIDEBAR_BLOCK_SQUARE_CARD: EditorContentBlockSquareCard,
+  DND_EDITOR_SIDEBAR_BLOCK_RICH_SQUARE_CARD: EditorContentBlockRichSquareCard,
+  DND_EDITOR_SIDEBAR_BLOCK_BUTTON: EditorContentBlockButton,
   DND_EDITOR_SIDEBAR_BLOCK_YOUTUBE: EditorContentBlockYouTube,
-  DND_EDITOR_SIDEBAR_BLOCK_BOX_CONHECER: EditorContentBlockBoxConhecer,
-  DND_EDITOR_SIDEBAR_BLOCK_BOX_DESCONTOS: EditorContentBlockBoxDescontos,
-  DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_CAMPUS: EditorContentBlockQrCodeCampus,
-  DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_CIC: EditorContentBlockQrCodeCic,
-  DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_SJP: EditorContentBlockQrCodeSjp,
-  DND_EDITOR_SIDEBAR_BLOCK_QR_CODE_LONDRINA: EditorContentBlockQrCodeLondrina,
 }

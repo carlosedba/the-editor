@@ -102,10 +102,10 @@ module.exports = function ({ BUNDLE_NAME }) {
 					<html>
 						<head>
 							<meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui, user-scalable=no">
-							<title>Editor | Faculdades da Indústria</title>
+							<title>Editor</title>
 
 							<!-- iOS -->
-							<meta name="apple-mobile-web-app-title" content="Editor | Faculdades da Indústria">
+							<meta name="apple-mobile-web-app-title" content="Editor">
 							<meta name="apple-mobile-web-app-capable" content="yes">
 							<meta name="apple-mobile-web-app-status-bar-style" content="black">
 

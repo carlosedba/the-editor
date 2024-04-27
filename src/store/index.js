@@ -1,11 +1,11 @@
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux'
 import { createLogger } from 'redux-logger'
-import thunk from 'redux-thunk'
+import { thunk } from 'redux-thunk'
 import promiseMiddleware from 'redux-promise-middleware'
 
 import reducer from '@/reducers'
 
-import { PRODUCTION } from '@/globals'
+import { PRODUCTION } from '@/constants'
 
 function configureStore(preloadedState) {
 	const middlewares = [thunk, promiseMiddleware]
