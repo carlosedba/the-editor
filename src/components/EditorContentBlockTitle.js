@@ -58,7 +58,7 @@ export default function EditorContentBlockTitle(props) {
 
   return (
     <div className="editor-content-block editor-content-block-title" data-tooltip-id={DND_TYPE}>
-      <input placeholder="Título" value={content} onChange={handleChange}/>
+      <input placeholder="Title" value={content} onChange={handleChange}/>
 
       <EditorContentBlockTooltip
         id={DND_TYPE}

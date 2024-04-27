@@ -84,7 +84,7 @@ export default function EditorContentBlockButton(props) {
   return (
     <div className="editor-content-block editor-content-block-button" data-tooltip-id={DND_TYPE}>
       <div className="editor-content-block-button__btn">
-        <input placeholder="Botão" value={content.name} onChange={handleNameChange}/>
+        <input placeholder="Button" value={content.name} onChange={handleNameChange}/>
       </div>
       
       <EditorContentBlockTooltip

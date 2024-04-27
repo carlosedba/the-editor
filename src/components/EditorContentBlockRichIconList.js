@@ -55,7 +55,7 @@ import Log from '@/utils/Log'
 import { DND_EDITOR_SIDEBAR_BLOCK_RICH_ICON_LIST } from '@/dndTypes'
 
 function Placeholder() {
-  return <div className="lexical-editor-placeholder">Seu texto...</div>
+  return <div className="lexical-editor-placeholder">Your text...</div>
 }
 
 export default function EditorContentBlockRichIconList(props) {
@@ -237,7 +237,7 @@ export default function EditorContentBlockRichIconList(props) {
     <div className="editor-content-block editor-content-block-rich-icon-list" data-tooltip-id={DND_TYPE}>
       <button className="editor-content-block-rich-icon-list_add" onClick={handleAddItemClick}>
         <i data-feather="plus"></i>
-        Adicionar item
+        Add item
       </button>
 
       {renderItems()}
@@ -251,7 +251,7 @@ export default function EditorContentBlockRichIconList(props) {
       />
 
       <Menu id={menuId}>
-        <Item onClick={handleBaixarSvg}>Baixar SVG</Item>
+        <Item onClick={handleBaixarSvg}>Download SVG</Item>
       </Menu>
     </div>
   )

@@ -158,7 +158,7 @@ export default function EditorContentBlockIconList(props) {
             <input className="editor-content-block-icon-list-item__icon-input" type="file" accept="image/svg+xml" onChange={(event) => handleItemIconChange(event, i)} ref={(el) => fileInputs.current[i] = el}/>
             <div className="editor-content-block-icon-list-item__icon-preview" dangerouslySetInnerHTML={{ __html: item.icon }}></div>
           </div>
-          <input className="editor-content-block-icon-list-item__text-input" placeholder="Texto..." type="text" value={item.text} onChange={(event) => handleItemTextChange(event, i)}/>
+          <input className="editor-content-block-icon-list-item__text-input" placeholder="Text..." type="text" value={item.text} onChange={(event) => handleItemTextChange(event, i)}/>
         </div>
       )
     })
@@ -168,7 +168,7 @@ export default function EditorContentBlockIconList(props) {
     <div className="editor-content-block editor-content-block-icon-list" data-tooltip-id={DND_TYPE}>
       <button className="editor-content-block-icon-list_add" onClick={handleAddItemClick}>
         <i data-feather="plus"></i>
-        Adicionar item
+        Add item
       </button>
 
       {renderItems()}
@@ -182,7 +182,7 @@ export default function EditorContentBlockIconList(props) {
       />
 
       <Menu id={menuId}>
-        <Item onClick={handleBaixarSvg}>Baixar SVG</Item>
+        <Item onClick={handleBaixarSvg}>Download SVG</Item>
       </Menu>
     </div>
   )

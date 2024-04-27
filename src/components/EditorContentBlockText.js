@@ -58,7 +58,7 @@ export default function EditorContentBlockText(props) {
 
   return (
     <div className="editor-content-block editor-content-block-text" data-tooltip-id={DND_TYPE}>
-      <textarea placeholder="Texto..." value={content} onChange={handleChange}/>
+      <textarea placeholder="Text..." value={content} onChange={handleChange}/>
 
       <EditorContentBlockTooltip
         id={DND_TYPE}

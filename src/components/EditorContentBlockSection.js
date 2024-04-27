@@ -248,7 +248,7 @@ export default function EditorContentBlockSection(props) {
     <div className="editor-content-block editor-content-block-section" ref={drop}>
       <header className="editor-content-block-header">
         <i data-feather="align-justify"></i>
-        Seção
+        Section
       </header>
 
       <div className="editor-content-block-controller">

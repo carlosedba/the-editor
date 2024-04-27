@@ -45,7 +45,7 @@ import Log from '@/utils/Log'
 import { DND_EDITOR_SIDEBAR_BLOCK_RICH_TEXT } from '@/dndTypes'
 
 function Placeholder() {
-  return <div className="editor-placeholder">Seu texto...</div>
+  return <div className="editor-placeholder">Your text...</div>
 }
 
 export default function EditorContentBlockRichText(props) {

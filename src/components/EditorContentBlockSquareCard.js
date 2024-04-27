@@ -152,7 +152,7 @@ export default function EditorContentBlockSquareCard(props) {
             <input className="editor-content-block-square-card-item__icon-input" type="file" accept="image/svg+xml" onChange={(event) => handleItemIconChange(event, i)} ref={(el) => fileInputs.current[i] = el}/>
             <div className="editor-content-block-square-card-item__icon-preview" dangerouslySetInnerHTML={{ __html: item.icon }}></div>
           </div>
-          <textarea className="editor-content-block-square-card-item__text-input" placeholder="Texto..." type="text" value={item.text} onChange={(event) => handleItemTextChange(event, i)}/>
+          <textarea className="editor-content-block-square-card-item__text-input" placeholder="Text..." type="text" value={item.text} onChange={(event) => handleItemTextChange(event, i)}/>
         </div>
       )
     })
@@ -162,7 +162,7 @@ export default function EditorContentBlockSquareCard(props) {
     <div className="editor-content-block editor-content-block-square-card" data-tooltip-id={DND_TYPE}>
       <button className="editor-content-block-square-card_add" onClick={handleAddItemClick}>
         <i data-feather="plus"></i>
-        Adicionar item
+        Add card
       </button>
 
       {renderItems()}
@@ -176,7 +176,7 @@ export default function EditorContentBlockSquareCard(props) {
       />
 
       <Menu id={menuId}>
-        <Item onClick={handleBaixarSvg}>Baixar SVG</Item>
+        <Item onClick={handleBaixarSvg}>Download SVG</Item>
       </Menu>
     </div>
   )

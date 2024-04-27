@@ -63,16 +63,16 @@ const supportedBlockTypes = new Set([
 ]);
 
 const blockTypeToBlockName = {
-  code: "Bloco de código",
+  code: "Code",
   h1: "Large Heading",
   h2: "Small Heading",
   h3: "Heading",
   h4: "Heading",
   h5: "Heading",
-  ol: "Lista numerada",
-  paragraph: "Texto",
-  quote: "Citação",
-  ul: "Tópicos"
+  ol: "Numbered List",
+  paragraph: "Paragraph",
+  quote: "Quote",
+  ul: "Bullet List"
 };
 
 function positionEditorElement(editor, rect) {
@@ -431,27 +431,27 @@ function BlockOptionsDropdownList({
     <div className="dropdown" ref={dropDownRef}>
       <button className="item" onClick={formatParagraph}>
         <span className="icon paragraph" />
-        <span className="text">Texto</span>
+        <span className="text">Paragraph</span>
         {blockType === "paragraph" && <span className="active" />}
       </button>
       <button className="item" onClick={formatBulletList}>
         <span className="icon bullet-list" />
-        <span className="text">Tópicos</span>
+        <span className="text">Bullet List</span>
         {blockType === "ul" && <span className="active" />}
       </button>
       <button className="item" onClick={formatNumberedList}>
         <span className="icon numbered-list" />
-        <span className="text">Lista numerada</span>
+        <span className="text">Numbered List</span>
         {blockType === "ol" && <span className="active" />}
       </button>
       <button className="item" onClick={formatQuote}>
         <span className="icon quote" />
-        <span className="text">Citação</span>
+        <span className="text">Quote</span>
         {blockType === "quote" && <span className="active" />}
       </button>
       <button className="item" onClick={formatCode}>
         <span className="icon code" />
-        <span className="text">Bloco de código</span>
+        <span className="text">Code</span>
         {blockType === "code" && <span className="active" />}
       </button>
     </div>
