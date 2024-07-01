@@ -1,6 +1,6 @@
 # The Editor
 
-I created The Editor as an experiment of a drag-and-drop page editor. It was designed to easily allow for the addition of new blocks.
+I created The Editor as an experiment of a React drag-and-drop page editor. It was designed to easily allow for the addition of new blocks.
 
 The content inserted into the blocks is stored as an object and rendered to HTML using Handlebars templates that match the block identifier. Rich text is supported through Facebook's Lexical framework.
 
